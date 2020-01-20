@@ -17,7 +17,7 @@ $(function () {
         lines: {
             fill: true
         },
-        yaxis: {
+        yaxis: { 
             min: 0,
             max: 100
         },
