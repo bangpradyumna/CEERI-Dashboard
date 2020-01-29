@@ -1,5 +1,4 @@
-let url = "http://www.amock.io/api/ihp";
-// let url2 = "https://nodesdarsh.free.beeceptor.com";
+let url = "http://www.amock.io/api/theweblover/ihp";
 var map;
 
 window.onload = function loadPage(){
