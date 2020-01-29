@@ -40,7 +40,7 @@ function drawDocSparklines() {
         });
 
     // Bar charts using inline values
-    $('.sparkbar').sparkline('html', { type: 'bar' });
+    $('.sparkbar').sparkline('html', { type: 'bar', height: '20', barWidth: 40, barSpacing: 4, barColor: '#00C0DD', negBarColor: "#001DFF" });
 
     $('.barformat').sparkline([1, 3, 5, 3, 8], {
         type: 'bar',

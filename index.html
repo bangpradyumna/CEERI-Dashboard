@@ -33,6 +33,10 @@
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="css/themes/all-themes.css" rel="stylesheet" />
+
+    <script src="https://apis.mapmyindia.com/advancedmaps/v1/fxg5xxjyla88nsuwhengavq9roz2lred/map_load?v=1.3"></script>
+    <style> #map {margin: 0;padding: 0;width: 100%;height: 100%;} </style>
+
 </head>
 
 <body class="theme-red">
@@ -103,7 +107,7 @@
                         </div>
                         <div class="content">
                             <div class="text">Temperature</div>
-                            <div class="number">213°C</div>
+                            <div class="number">13°C</div>
                             <!-- <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20"></div> -->
                         </div>
                     </div>
@@ -140,7 +144,7 @@
                         </div>
                         <div class="content">
                             <div class="text">Sound (dB)</div>
-                            <div class="number">213 dB</div>
+                            <div class="number">150 dB</div>
                             <!-- <div class="number count-to" data-from="0" data-to="243" data-speed="1000" data-fresh-interval="20"></div> -->
                         </div>
                     </div>
@@ -178,7 +182,8 @@
                                 </ul>
                             </div> -->
                             <div class="body">
-                                <div id="world-map-markers" class="jvector-map"></div>
+                                <!-- <div id="world-map-markers" class="jvector-map"></div> -->
+                                <div id="map"></div>
                             </div>
                         </div>
                     </div>
@@ -187,6 +192,148 @@
 
 
 
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                    <div class="card">
+                        <div class="header bg-cyan">
+                            <div class="row clearfix">
+                                <div class="col-md-6">
+                                    <h1>PILANI</h1>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="knob" value="18" data-width="125" data-height="125" data-thickness="0.25" data-fgColor="#FFFFFF   "
+                                           data-anglearc="250" data-angleoffset="-125" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div>
+                                <table class="table table-hover table-condensed">
+                                    <tr>
+                                    <th class="col-md-1 col-sm-1 col-xs-1">Pollutant</th>
+                                    <th class="col-md-8 col-sm-8 col-xs-8 text-center">Timeline</th>
+                                    <th class="col-md-1 col-sm-1 col-xs-1" title="Average">Avg</th>                                                
+                                    <th class="col-md-1 col-sm-1 col-xs-1" title="Minimum">Min</th>
+                                    <th class="col-md-1 col-sm-1 col-xs-1" title="Maximum">Max</th>
+                                    </tr>
+                                    <tr>
+                                        <td>PM2.5</td>
+                                        <td><span class="sparkbar" style="display:flex;justify-content:center;">10,8,9,3,5,8,5</span></td>
+                                        <td>58</td>
+                                        <td>156</td>
+                                        <td>136</td>
+                                    </tr>
+                                    <tr>
+                                        <td>PM10</td>
+                                        <td><span class="sparkbar" style="display:flex;justify-content:center;">10,8,9,3,5,8,5</span></td>
+                                        <td>58</td>
+                                        <td>156</td>
+                                        <td>136</td>
+                                    </tr>
+                                    <tr>
+                                        <td>NO2</td>
+                                        <td><span class="sparkbar" style="display:flex;justify-content:center;">10,-5,9,3,5,8,5</span></td>
+                                        <td>58</td>
+                                        <td>156</td>
+                                        <td>136</td>
+                                    </tr>
+                                    <tr>
+                                        <td>NH3</td>
+                                        <td><span class="sparkbar" style="display:flex;justify-content:center;">10,8,9,3,-2,8,5</span></td>
+                                        <td>58</td>
+                                        <td>156</td>
+                                        <td>136</td>
+                                    </tr>
+                                    <tr>
+                                        <td>SO2</td>
+                                        <td><span class="sparkbar" style="display:flex;justify-content:center;">10,8,9,3,5,8,5</span></td>
+                                        <td>58</td>
+                                        <td>156</td>
+                                        <td>136</td>
+                                    </tr>
+                                    <tr>
+                                        <td>OZONE</td>
+                                        <td><span class="sparkbar" style="display:flex;justify-content:center;">10,8,9,3,5,8,5</span></td>
+                                        <td>58</td>
+                                        <td>156</td>
+                                        <td>136</td>
+                                    </tr>
+                                    <tr>
+                                        <td>CO</td>
+                                        <td><span class="sparkbar" style="display:flex;justify-content:center;">10,8,9,3,5,8,5</span></td>
+                                        <td>58</td>
+                                        <td>156</td>
+                                        <td>136</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                <!-- #END# Visitors -->
+                <!-- Latest Social Trends -->
+                <!-- <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="card">
+                        <div class="body bg-cyan">
+                            <div class="m-b--35 font-bold">LATEST SOCIAL TRENDS</div>
+                            <ul class="dashboard-stat-list">
+                                <li>
+                                    #socialtrends
+                                    <span class="pull-right">
+                                        <i class="material-icons">trending_up</i>
+                                    </span>
+                                </li>
+                                <li>
+                                    #materialdesign
+                                    <span class="pull-right">
+                                        <i class="material-icons">trending_up</i>
+                                    </span>
+                                </li>
+                                <li>#adminbsb</li>
+                                <li>#freeadmintemplate</li>
+                                <li>#bootstraptemplate</li>
+                                <li>
+                                    #freehtmltemplate
+                                    <span class="pull-right">
+                                        <i class="material-icons">trending_up</i>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>-->
+                    </div>
+                </div>
+                <!-- #END# Latest Social Trends -->
+
+            </div>
+            <!-- CPU Usage -->
+            <div class="row clearfix">
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                    <div class="card">
+                        <div class="header">
+                            <div class="row clearfix">
+                                <div class="col-xs-12 col-sm-6">
+                                    <h2>AIR QUALITY</h2>
+                                </div>
+
+                            </div>
+                            <!-- <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="javascript:void(0);">Action</a></li>
+                                        <li><a href="javascript:void(0);">Another action</a></li>
+                                        <li><a href="javascript:void(0);">Something else here</a></li>
+                                    </ul>
+                                </li>
+                            </ul> -->
+                        </div>
+                        <div class="body">
+                            <div id="real_time_chart" class="dashboard-flot-chart"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Answered Tickets -->
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="card">
                         <div class="body bg-pink">
@@ -218,110 +365,10 @@
                         </div>
                     </div>
                 </div>
-                <!-- #END# Visitors -->
-                <!-- Latest Social Trends -->
-                <!-- <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                    <div class="card">
-                        <div class="body bg-cyan">
-                            <div class="m-b--35 font-bold">LATEST SOCIAL TRENDS</div>
-                            <ul class="dashboard-stat-list">
-                                <li>
-                                    #socialtrends
-                                    <span class="pull-right">
-                                        <i class="material-icons">trending_up</i>
-                                    </span>
-                                </li>
-                                <li>
-                                    #materialdesign
-                                    <span class="pull-right">
-                                        <i class="material-icons">trending_up</i>
-                                    </span>
-                                </li>
-                                <li>#adminbsb</li>
-                                <li>#freeadmintemplate</li>
-                                <li>#bootstraptemplate</li>
-                                <li>
-                                    #freehtmltemplate
-                                    <span class="pull-right">
-                                        <i class="material-icons">trending_up</i>
-                                    </span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- #END# Latest Social Trends -->
-                <!-- Answered Tickets -->
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                    <div class="card">
-                        <div class="body bg-teal">
-                            <div class="font-bold m-b--35">POLLUTANTS</div>
-                            <ul class="dashboard-stat-list">
-                                <li>
-                                    PM10
-                                    <span class="pull-right"><b>276</b> <small></small></span>
-                                </li>
-                                <li>
-                                    PM2.5
-                                    <span class="pull-right"><b>413</b> <small></small></span>
-                                </li>
-                                <li>
-                                    NO2
-                                    <span class="pull-right"><b>< 10</b> <small></small></span>
-                                </li>
-                                <li>
-                                    OZONE
-                                    <span class="pull-right"><b>37</b> <small></small></span>
-                                </li>
-                                <li>
-                                    SO2
-                                    <span class="pull-right"><b>< 10</b> <small></small></span>
-                                </li>
-                                <li>
-                                    CO
-                                    <span class="pull-right"><b>22</b> <small></small></span>
-                                </li>
-                                <li>
-                                    NO
-                                    <span class="pull-right"><b>32</b> <small> (ppb)</small></span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
                 <!-- #END# Answered Tickets -->
             </div>
-            <!-- CPU Usage -->
-            <div class="row clearfix">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="card">
-                        <div class="header">
-                            <div class="row clearfix">
-                                <div class="col-xs-12 col-sm-6">
-                                    <h2>AIR QUALITY</h2>
-                                </div>
-
-                            </div>
-                            <!-- <ul class="header-dropdown m-r--5">
-                                <li class="dropdown">
-                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">more_vert</i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li><a href="javascript:void(0);">Action</a></li>
-                                        <li><a href="javascript:void(0);">Another action</a></li>
-                                        <li><a href="javascript:void(0);">Something else here</a></li>
-                                    </ul>
-                                </li>
-                            </ul> -->
-                        </div>
-                        <div class="body">
-                            <div id="real_time_chart" class="dashboard-flot-chart"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!-- #END# CPU Usage -->
+                
             
             <div class="alert alert-success">
                 Website created by <strong><a href="https://github.com/bangpradyumna/" class="alert-link">Pradyumna Bang</a></strong> 
@@ -364,6 +411,13 @@
     <!-- Sparkline Chart Plugin Js -->
     <script src="plugins/jquery-sparkline/jquery.sparkline.js"></script>
 
+    <script src="js/pages/charts/sparkline.js"></script>
+
+        <!-- Jquery Knob Plugin Js -->
+        <script src="plugins/jquery-knob/jquery.knob.min.js"></script>
+        <script src="js/pages/charts/jquery-knob.js"></script>
+
+
     <!-- Custom Js -->
     <script src="js/admin.js"></script>
     <script src="js/pages/index.js"></script>
@@ -377,6 +431,7 @@
     <script src="https://kit.fontawesome.com/0ad1d9f295.js" crossorigin="anonymous"></script>
     <!-- Demo Js -->
     <script src="js/demo.js"></script>
+    <script src="js/map.js"></script>
 </body>
 
 </html>

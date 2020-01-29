@@ -1,6 +1,44 @@
 if (typeof jQuery === "undefined") {
     throw new Error("jQuery plugins need to be before this file");
 }
+// var map=new MapmyIndia.Map("map",{ center:[22.248428704383624, 86.52832031250001],zoomControl: true,hybrid:true,zoom:4 });
+// var marker = [];
+// var url = "";
+// var response = await fetch(url);
+// L.marker([28.3802, 75.6092]).addTo(map);
+
+// function mapInit(center) {
+//     var tempMap=new MapmyIndia.Map("map",{ center:[center.lat, center.lng],zoomControl: true,hybrid:true,zoom:4 });
+//     return tempMap;
+// }
+
+// function domInit(def) {
+//     L.marker([def.lat, def.lng]).addTo(map);
+// }
+
+// function addMarker(position, title, draggable) 
+// { 
+//     var mk = new L.Marker(position, {draggable: draggable, title: title}); 
+//     mk.bindPopup(title); 
+//     map.addLayer(mk); 
+//     mk.on("click", function (e) 
+//     { 
+//         window.onload
+//     }); 
+//     return mk; 
+// }
+
+// map.on("dblclick", function (e) 
+// { 
+//     var title = "Text marker sample!"; 
+//     marker.push(addMarker(e.latlng, title)); 
+
+// });
+
+// function main(props) {
+//     mapInit(props.center);
+//     domInit(props.def);
+// }
 
 $.AdminBSB = {};
 $.AdminBSB.options = {

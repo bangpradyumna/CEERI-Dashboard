@@ -34,7 +34,6 @@ $(function () {
             content: '<p>HTML Content</p>'
         }
     });
-
     //Static maps
     var staticMap = GMaps.staticMapURL({
         size: [$('#gmap_static_map').width(), 400],
