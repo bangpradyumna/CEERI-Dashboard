@@ -1,4 +1,5 @@
-let url = "http://www.mocky.io/v2/5e3186623200002b008885ee";
+let url = "http://www.mocky.io/v2/5e31a6b13200009887888708";
+let url2 = "https://nodesdarsh.free.beeceptor.com";
 var map;
 
 window.onload = function loadPage(){
@@ -43,9 +44,16 @@ function addMarker(mk){
 
 function fetchDataForNode(props){
     // Fetch a data for node "props"
-    // let property_div = document.getElementById("pm2_5");
-    // property_div.innerHTML = "20,20,20,20,20,20,20";
-    $('.sparkbar.pm10').sparkline([1,5,-1,-10,20], { type: 'bar', height: '20', barWidth: 40, barSpacing: 4, barColor: '#00C0DD', negBarColor: "#001DFF" });
+    fetch(url2+"/"+props.id)
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            $('.sparkbar.pm10').sparkline(data.pm10, { type: 'bar', height: '20', barWidth: 40, barSpacing: 4, barColor: '#00C0DD', negBarColor: "#001DFF" });
+        });
+    // $('.sparkbar.pm10').sparkline([1,5,-1,-10,20], { type: 'bar', height: '20', barWidth: 40, barSpacing: 4, barColor: '#00C0DD', negBarColor: "#001DFF" });
     // console.log("Fetching data for ");
     // console.log(props);
 }
+
+// http://www.mocky.io/v2/5e31a6b13200009887888708
