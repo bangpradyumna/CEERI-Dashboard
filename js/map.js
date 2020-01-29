@@ -37,23 +37,20 @@ function addMarker(mk){
     return tempMk;
 }
 
-// function addDefaultData(props){
-//     // Something to fetch data of default city
-//     return;
-// }
-
 function fetchDataForNode(props){
     // Fetch a data for node "props"
-    fetch(url2+"/"+props.id)
+    console.log(`${url2}/${props.id}`);
+    fetch(`${url2}/${props.id}`)
         .then((response) => {
             return response.json();
         })
         .then((data) => {
-            $('.sparkbar.pm10').sparkline(data.pm10, { type: 'bar', height: '20', barWidth: 40, barSpacing: 4, barColor: '#00C0DD', negBarColor: "#001DFF" });
+            console.log(data);
+            for(var property in data.pollutants) {
+                console.log(`.sparkbar.${property}`);
+                console.log(property);
+                console.log(data.pollutants[property]);
+                $(`.sparkbar.${property}`).sparkline(data.pollutants[property], { type: 'bar', height: '20', barWidth: 40, barSpacing: 4, barColor: '#00C0DD', negBarColor: "#001DFF" });
+            }
         });
-    // $('.sparkbar.pm10').sparkline([1,5,-1,-10,20], { type: 'bar', height: '20', barWidth: 40, barSpacing: 4, barColor: '#00C0DD', negBarColor: "#001DFF" });
-    // console.log("Fetching data for ");
-    // console.log(props);
 }
-
-// http://www.mocky.io/v2/5e31a6b13200009887888708
