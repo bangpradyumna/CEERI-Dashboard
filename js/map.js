@@ -1,5 +1,5 @@
 let url = "http://www.amock.io/api/theweblover/ihp";
-var map;
+let map;
 
 window.onload = function loadPage(){
     fetch(url)
@@ -44,6 +44,8 @@ function fetchDataForNode(props){
             return response.json();
         })
         .then((data) => {
+            let aqi = document.getElementById("aqi");
+            aqi.value = data.aqi;
             for(var property in data.pollutants) {
                 $(`.sparkbar.${property}`).sparkline(data.pollutants[property], { type: 'bar', height: '20', barWidth: 40, barSpacing: 4, barColor: '#00C0DD', negBarColor: "#001DFF" });
             }
