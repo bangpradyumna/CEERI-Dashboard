@@ -45,7 +45,9 @@ function fetchDataForNode(props){
         })
         .then((data) => {
             let aqi = document.getElementById("aqi");
+            let location = document.getElementById("location");
             aqi.value = data.aqi;
+            location.innerHTML = data.name;
             for(var property in data.pollutants) {
                 $(`.sparkbar.${property}`).sparkline(data.pollutants[property], { type: 'bar', height: '20', barWidth: 40, barSpacing: 4, barColor: '#00C0DD', negBarColor: "#001DFF" });
             }
