@@ -3,10 +3,11 @@ var AirUIMap = function (airObj) {
 
   /* Required fields in configuration object */
   var requiredFields = ['mapCenterLat', 'mapCenterLng', 'mapZoom', 'mapStateZoom', 'mapCityZoom', 'mapStationZoom'];
-  let map;
+  var map;
   var air = airObj;
   var MAP_ID = "map";
   var loaded = false;
+  var loadedMap = false;
   let data_response;
   let url = "https://app.cpcbccr.com/caaqms/caaqms_landing_map_all";
 
@@ -64,12 +65,13 @@ var AirUIMap = function (airObj) {
   }
 
   function drawMap(center) {
-    return new MapmyIndia.Map("map", {
+    map = new MapmyIndia.Map("map", {
       center: [center.latitude, center.longitude],
       zoomControl: true,
       hybrid: true,
       zoom: 4
     });
+    loadedMap = true;
   }
 
   function latLng(lat, lng) {
@@ -77,15 +79,16 @@ var AirUIMap = function (airObj) {
   }
 
   async function initialize() {
-    console.log("INITIAL")
-    if(loaded) return;
+    console.log("INITIAL", loadedMap)
+    if(loadedMap) return;
+    loadedMap = true;
     // var mapOptions = {
     //   'center': latLng(self.config.mapCenterLat, self.config.mapCenterLng),
     //   'zoom': parseInt(self.config.mapZoom),
     //   'streetViewControl': false
     // };
     console.log(data_response)
-    map = await drawMap(data_response.map.station_list[0]);
+    await drawMap(data_response.map.station_list[0]);
     console.log(map)
     await pinStations(air.getAllStations());
     // google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
@@ -118,7 +121,7 @@ var AirUIMap = function (airObj) {
     self.emit('stationClick', id);
   }
 
-  function pinStation(station) {
+  async function pinStation(station) {
     // var markerOptions = {
     //   'position': latLng(station.latitude, station.longitude),
     //   'map': map,
@@ -130,6 +133,7 @@ var AirUIMap = function (airObj) {
     // if(station.live)
     //   google.maps.event.addListener(marker, 'click', stationClicked);
     // return marker;
+    console.log(map)
     let tempMk = new L.marker([station.latitude, station.longitude]).addTo(map);
     tempMk.on("click", function (e) {
       console.log(station);

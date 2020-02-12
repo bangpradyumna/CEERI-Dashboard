@@ -46,7 +46,7 @@ var AirUIComparator = function(airObj) {
     //   }
     // });
     // self.config = config;
-    map.configure();
+    // map.configure();
   }
   
   /* Sets up and draws all the ui elements */
