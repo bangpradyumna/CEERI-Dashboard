@@ -1,0 +1,178 @@
+html, body {
+    min-height: 100%;
+}
+
+body {
+    font-family: Cambria,"Palatino Linotype","Book Antiqua","URW Palladio L",serif;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.no-gutter [class*="-3"] {
+    padding-left:0;
+    padding-right:0;    
+}
+
+.aqi-panel .panel-body{
+    padding: 0px
+}
+
+.aqi-panel .title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.graph-container {
+    height: 30px;
+}
+
+.metrics-row {
+    height: 30px;
+}
+
+.text-middle {
+    vertical-align: middle !important;
+}
+
+.navbar-brand {
+    color: white !important;
+}
+
+.footer .navbar-text {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.no-data #data-available-panel {
+    display: none;
+}
+
+#no-data-panel {
+    display: none;
+}
+
+.no-data #no-data-panel {
+    display: block;
+}
+
+.no-response #data-available-panel {
+    display: none;
+}
+
+#no-response-panel {
+    display: none;
+}
+
+.no-response #no-response-panel {
+    display: block;
+}
+
+.insuf-data .aqi-meter {
+    display: none;
+}
+
+.station-down .aqi-meter {
+    display: none;
+}
+
+.insuf-data .insuf-data-panel {
+    display: block;
+}
+
+.insuf-data-panel {
+    display: none;
+    height: 150px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.station-down .station-down-panel {
+    display: block;
+}
+
+.station-down-panel {
+    display: none;
+    height: 150px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.overlay {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    height: 100%;
+    z-index: 999;
+    background: white;
+    top:0;
+    transition: opacity 1s linear, visibility 0s linear 1s;
+}
+
+body > .overlay {
+    position: fixed;
+    z-index: 9999;
+    right: 0px;
+    left: 0px;
+}
+
+.loading > .overlay {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 1s linear, display 0s linear 1s;    
+}
+
+.loader{
+    position: relative;
+    top: 50%;
+    left: 50%;
+}
+
+@keyframes loader_anim {
+    0% {height:5px;transform:translateY(0px);background:#9b59b6;}
+    25% {height:30px;transform:translateY(15px);background:#3498db;}
+    50% {height:5px;transform:translateY(0px);background:#9b59b6;}
+    100% {height:5px;transform:translateY(0px);background:#9b59b6;}
+}
+
+.loader span{
+    display:block;
+    bottom:0px;
+    width: 9px;
+    height: 5px;
+    background:#9b59b6;
+    position:absolute;
+    animation: loader_anim 1.5s infinite ease-in-out;
+}
+ 
+.loader span:nth-child(2){
+    left:11px;
+    animation-delay: .2s;
+    
+}
+.loader span:nth-child(3){
+    left:22px;
+    animation-delay: .4s;
+}
+.loader span:nth-child(4){
+    left:33px;
+    animation-delay: .6s;
+}
+.loader span:nth-child(5){
+    left:44px;
+    animation-delay: .8s;
+}
+
+.navbar-nav>li>a.owner{
+    font-size: smaller;
+    padding: 9px;
+}
+
+.navbar-nav img.emblem{
+    height: 42px;
+}
+
+.devbar .logo{
+    height: 60px;
+    width: 60px;
+}
+
