@@ -1,473 +1,548 @@
-﻿<!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Weather monitoring dashboard!</title>
-    <!-- Favicon-->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>National Air Quality Index</title>
+  <!-- Bootstrap -->
+  <link href='assets/stylesheets/bootstrap.min.css' rel="stylesheet">
+  <!--link href="assets/stylesheets/bootstrap-theme.min.css" rel="stylesheet"-->
+  <link href="assets/stylesheets/theme.css" rel="stylesheet">
+  <link href="assets/stylesheets/bootstrap-select.min.css" rel="stylesheet">
+  <!--link href="assets/stylesheets/bootstrap-sortable.css" rel="stylesheet"-->
+  <link href="assets/stylesheets/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
+  <link href="assets/stylesheets/main.css" rel="stylesheet">
+  <!-- Google Maps CSS -->
+  <link href="assets/stylesheets/map.css" rel="stylesheet">
+  <link href="assets/stylesheets/bootstrap-timepicker.min.css" rel="stylesheet">
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-
-    <!-- Bootstrap Core Css -->
-    <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
-
-    <!-- Waves Effect Css -->
-    <link href="plugins/node-waves/waves.css" rel="stylesheet" />
-
-    <!-- Animation Css -->
-    <link href="plugins/animate-css/animate.css" rel="stylesheet" />
-    
-    <!-- JVectorMap Css -->
-    <link href="plugins/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" />
-
-    <!-- Morris Chart Css-->
-    <link href="plugins/morrisjs/morris.css" rel="stylesheet" />
-
-    <!-- Custom Css -->
-    <link href="css/style.css" rel="stylesheet">
-
-    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
-    <link href="css/themes/all-themes.css" rel="stylesheet" />
-
-    <script src="https://apis.mapmyindia.com/advancedmaps/v1/fxg5xxjyla88nsuwhengavq9roz2lred/map_load?v=1.3"></script>
-    <style> #map {margin: 0;padding: 0;width: 100%;height: 100%;} </style>
-    <style>
-        .grid {
-            display: grid;
-            grid-template-columns: auto;
-            align-items: center;
-            justify-content: center;
-        }
-        .grid-aqi {
-            font-size: 1.5rem;
-            justify-self: center;
-        }
-        /* #location {
-            display: grid;
-            /* justify-content: center;
-            justify-self: center;
-        } */
-    </style>
-
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 </head>
 
-<body class="theme-red">
-    <!-- Page Loader -->
-    <div class="page-loader-wrapper">
-        <div class="loader">
-            <div class="preloader">
-                <div class="spinner-layer pl-red">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                </div>
-            </div>
-            <p>Please wait...</p>
-        </div>
+<body data-spy="scroll" data-target="#navbar-id" class="loading">
+  <div class="overlay">
+    <div class="loader">
+      <span></span><span></span><span></span><span></span><span></span>
     </div>
-    <!-- #END# Page Loader -->
-    <!-- Overlay For Sidebars -->
-    <div class="overlay"></div>
-    <!-- #END# Overlay For Sidebars -->
-    <!-- Search Bar -->
-    <div class="search-bar">
-        <div class="search-icon">
-            <i class="material-icons">search</i>
-        </div>
-        <input type="text" placeholder="START TYPING...">
-        <div class="close-search">
-            <i class="material-icons">close</i>
-        </div>
+  </div>
+  <!-- Fixed navbar -->
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-x col-md-12">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">National Air Quality Index</a>
+      </div>
+      <!-- <div id="navbar-id" class="navbar-collapse collapse pull-right">
+        <ul class="nav navbar-nav">
+          <li class=""><a href="http://www.cpcb.nic.in/" target="_blank" class="owner"><img
+                src="assets/images/cpcb-logo.png" class="emblem" /></a></li>
+          <li class=""><a href="http://www.cpcb.nic.in/" target="_blank" class="owner">Central Pollution Control
+              Board,<br />Ministry of Environment, Forests and Climate Change</a></li>
+          <li class="hide"><a href="#aqi-description">Color Codes</a></li>
+          <li class="hide"><a href="#city-rankings">City Rankings</a></li>
+          <li class="hide"><a href="#city-comparison">Compare Cities</a></li>
+          <li class=""><a href="#data-availability">Data Availability</a></li>
+          <li class="hide"><a href="#credits">Credits</a></li>
+        </ul>
+      </div> -->
+      <!--/.nav-collapse -->
     </div>
-    <!-- #END# Search Bar -->
-    <!-- Top Bar -->
-    <nav class="navbar">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
-                <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="index.html">WEATHER MONITORING DASHBOARD</a>
-            </div>
-
+  </div>
+  <div class="container-x row-x col-md-12">
+    <div id="station-aqi" class="container-x">
+      <!--h2 class="text-center">Station AQI</h2-->
+      <div class="row">
+        <div class="col-md-2 form-group nullable">
+          <div class="input-group">
+            <div class="input-group-addon">State</div>
+            <select id="states" style="padding:0px;" class="form-control selectpicker" data-width="30%"
+              data-live-search="true" title="Select State...">
+            </select>
+          </div>
         </div>
-    </nav>
-    <!-- #Top Bar -->
-    <section>
-        <!-- Left Sidebar -->
-
-        <!-- #END# Left Sidebar -->
-
-        <!-- #END# Right Sidebar -->
-    </section>
-
-    <section class="content">
-        <div class="container-fluid">
-            <!-- <div class="block-header">
-                <h2>DASHBOARD</h2>
-            </div> -->
-
-            <!-- Widgets -->
-            <div class="row clearfix">
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box bg-orange hover-expand-effect">
-                        <div class="icon">
-                            <!-- <i class="material-icons">person_add</i> -->
-                            <i class="fas fa-thermometer-half"></i>
-                        </div>
-                        <div class="content">
-                            <div class="text">Temperature</div>
-                            <div class="number">13°C</div>
-                            <!-- <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20"></div> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box bg-pink hover-expand-effect">
-                        <div class="icon">
-                            <i class="material-icons">opacity</i>
-                            <!-- <img src="images/humidity.svg" alt="Humidity"> -->
-                        </div>
-                        <div class="content">
-                            <div class="text">Relative Humidity</div>
-                            <div class="number">21%</div>
-                            <!-- <div class="number count-to" data-from="0" data-to="125" data-speed="1500" data-fresh-interval="20"></div> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box bg-cyan hover-expand-effect">
-                        <div class="icon">
-                            <i class="material-icons">wb_sunny</i>
-                        </div>
-                        <div class="content">
-                            <div class="text">Sunlight (lux) </div>
-                            <div class="number">213 lux</div>
-                            <!-- <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20"></div> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box bg-light-green hover-expand-effect">
-                        <div class="icon">
-                            <i class="material-icons">surround_sound</i>
-                        </div>
-                        <div class="content">
-                            <div class="text">Sound (dB)</div>
-                            <div class="number">150 dB</div>
-                            <!-- <div class="number count-to" data-from="0" data-to="243" data-speed="1000" data-fresh-interval="20"></div> -->
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <!-- #END# Widgets -->
-
-            <div class="row clearfix equal ">
-                <!-- Visitors -->
-                    <!-- <div class="block-header">
-                        <h2>
-                            JVECTORMAP
-                            <small>Taken from <a href="http://jvectormap.com/" target="_blank">jvectormap.com</a></small>
-                        </h2>
-                    </div> -->
-                <!-- Example -->
-                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                        <div class="card">
-                            <div class="header">
-                                <h2>
-                                    MAP
-                                </h2>
-                                <ul class="header-dropdown m-r--5">
-                                    <li class="dropdown">
-                                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                            <i class="material-icons">more_vert</i>
-                                        </a>
-                                        <ul class="dropdown-menu pull-right">
-                                            <li><a href="javascript:void(0);">Action</a></li>
-                                            <li><a href="javascript:void(0);">Another action</a></li>
-                                            <li><a href="javascript:void(0);">Something else here</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="body">
-                                <!-- <div id="world-map-markers" class="jvector-map"></div> -->
-                                <div id="map"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- #END# Example -->
-                
-
-
-
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    <div class="card">
-                        <div class="header bg-cyan">
-                            <div class="row clearfix">
-                                <div class="col-md-6">
-                                    <h2 id="location">PILANI</h2>
-                                </div>
-                                <div class="col-md-6 grid">
-                                    <div>
-                                        <input type="text" id="aqi" class="knob" value="18" data-width="125" data-height="125" data-thickness="0.25" data-fgColor="#FFFFFF   "
-                                           data-anglearc="180" data-angleoffset="-125" readonly>
-                                    </div>
-                                    <div class="grid-aqi">
-                                        AQI
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div>
-                                <table class="table table-hover table-condensed">
-                                    <tr>
-                                    <th class="col-md-1 col-sm-1 col-xs-1">Pollutant</th>
-                                    <th class="col-md-8 col-sm-8 col-xs-8 text-center">Timeline</th>
-                                    <th class="col-md-1 col-sm-1 col-xs-1" title="Average">Avg</th>                                                
-                                    <th class="col-md-1 col-sm-1 col-xs-1" title="Minimum">Min</th>
-                                    <th class="col-md-1 col-sm-1 col-xs-1" title="Maximum">Max</th>
-                                    </tr>
-                                    <tr>
-                                        <td>PM2.5</td>
-                                        <td><span class="sparkbar pm25" style="display:flex;justify-content:center;"><div id="pm2.5">10,8,9,3,5,8,5</div></span></td>
-                                        <td>58</td>
-                                        <td>156</td>
-                                        <td>136</td>
-                                    </tr>
-                                    <tr>
-                                        <td>PM10</td>
-                                        <td><span class="sparkbar pm10" style="display:flex;justify-content:center;"><div id="pm10">10,8,9,3,5,8,5</div></span></td>
-                                        <td>58</td>
-                                        <td>156</td>
-                                        <td>136</td>
-                                    </tr>
-                                    <tr>
-                                        <td>NO</td>
-                                        <td><span class="sparkbar no" style="display:flex;justify-content:center;"><div id="pm2.5">10,8,9,3,5,8,5</div></span></td>
-                                        <td>58</td>
-                                        <td>156</td>
-                                        <td>136</td>
-                                    </tr>
-                                    <tr>
-                                        <td>NO2</td>
-                                        <td><span class="sparkbar no2" style="display:flex;justify-content:center;"><div id="no2">10,8,9,3,5,8,5</div></span></td>
-                                        <td>58</td>
-                                        <td>156</td>
-                                        <td>136</td>
-                                    </tr>
-                                    <tr>
-                                        <td>NOx</td>
-                                        <td><span class="sparkbar nox" style="display:flex;justify-content:center;"><div id="pm2.5">10,8,9,3,5,8,5</div></span></td>
-                                        <td>58</td>
-                                        <td>156</td>
-                                        <td>136</td>
-                                    </tr>
-                                    <tr>
-                                        <td>NH3</td>
-                                        <td><span class="sparkbar nh3" style="display:flex;justify-content:center;"><div id="nh3">10,8,9,3,5,8,5</div></span></td>
-                                        <td>58</td>
-                                        <td>156</td>
-                                        <td>136</td>
-                                    </tr>
-                                    <tr>
-                                        <td>SO2</td>
-                                        <td><span class="sparkbar so2" style="display:flex;justify-content:center;"><div id="so2">10,8,9,3,5,8,5</div></span></td>
-                                        <td>58</td>
-                                        <td>156</td>
-                                        <td>136</td>
-                                    </tr>
-                                    <tr>
-                                        <td>OZONE</td>
-                                        <td><span class="sparkbar ozone" style="display:flex;justify-content:center;"><div id="ozone">10,8,9,3,5,8,5</div></span></td>
-                                        <td>58</td>
-                                        <td>156</td>
-                                        <td>136</td>
-                                    </tr>
-                                    <tr>
-                                        <td>CO</td>
-                                        <td><span class="sparkbar co" style="display:flex;justify-content:center;"><div id="co">10,8,9,3,5,8,5</div></span></td>
-                                        <td>58</td>
-                                        <td>156</td>
-                                        <td>136</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                <!-- #END# Visitors -->
-                <!-- Latest Social Trends -->
-                <!-- <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                    <div class="card">
-                        <div class="body bg-cyan">
-                            <div class="m-b--35 font-bold">LATEST SOCIAL TRENDS</div>
-                            <ul class="dashboard-stat-list">
-                                <li>
-                                    #socialtrends
-                                    <span class="pull-right">
-                                        <i class="material-icons">trending_up</i>
-                                    </span>
-                                </li>
-                                <li>
-                                    #materialdesign
-                                    <span class="pull-right">
-                                        <i class="material-icons">trending_up</i>
-                                    </span>
-                                </li>
-                                <li>#adminbsb</li>
-                                <li>#freeadmintemplate</li>
-                                <li>#bootstraptemplate</li>
-                                <li>
-                                    #freehtmltemplate
-                                    <span class="pull-right">
-                                        <i class="material-icons">trending_up</i>
-                                    </span>
-                                </li>
-                            </ul>
-                        </div>-->
-                    </div>
-                </div>
-                <!-- #END# Latest Social Trends -->
-
-            </div>
-            <!-- CPU Usage -->
-            <div class="row clearfix">
-                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                    <div class="card">
-                        <div class="header">
-                            <div class="row clearfix">
-                                <div class="col-xs-12 col-sm-6">
-                                    <h2>AIR QUALITY</h2>
-                                </div>
-
-                            </div>
-                            <!-- <ul class="header-dropdown m-r--5">
-                                <li class="dropdown">
-                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">more_vert</i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li><a href="javascript:void(0);">Action</a></li>
-                                        <li><a href="javascript:void(0);">Another action</a></li>
-                                        <li><a href="javascript:void(0);">Something else here</a></li>
-                                    </ul>
-                                </li>
-                            </ul> -->
-                        </div>
-                        <div class="body">
-                            <div id="real_time_chart" class="dashboard-flot-chart"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Answered Tickets -->
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                    <div class="card">
-                        <div class="body bg-pink">
-                            
-                            <div class="sparkline" data-type="line" data-spot-Radius="4" data-highlight-Spot-Color="rgb(233, 30, 99)" data-highlight-Line-Color="#fff"
-                                 data-min-Spot-Color="rgb(255,255,255)" data-max-Spot-Color="rgb(255,255,255)" data-spot-Color="rgb(255,255,255)"
-                                 data-offset="90" data-width="100%" data-height="92px" data-line-Width="2" data-line-Color="rgba(255,255,255,0.7)"
-                                 data-fill-Color="rgba(0, 188, 212, 0)">
-                                12,10,9,6,5,6,10,5,7,5,12,13,7,12,11
-                            </div>
-                            <br>
-                            <br>
-                            <div class="font-bold m-b--35">AIR QUALITY INDEX</div>
-                            
-                            <ul class="dashboard-stat-list">
-                                <li>
-                                    TODAY
-                                    <span class="pull-right"><b>413</b> <small>SEVERE</small></span>
-                                </li>
-                                <li>
-                                    YESTERDAY
-                                    <span class="pull-right"><b>500</b> <small>SEVERE</small></span>
-                                </li>
-                                <li>
-                                    LAST WEEK AVERAGE
-                                    <span class="pull-right"><b>300</b> <small>VERY POOR</small></span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- #END# Answered Tickets -->
-            </div>
-            <!-- #END# CPU Usage -->
-                
-            
-            <div class="alert alert-success">
-                Website created by <strong><a href="https://github.com/bangpradyumna/" class="alert-link">Pradyumna Bang</a></strong> and <strong><a href="https://github.com/DarshRPatel/" class="alert-link">Darsh Patel</a></strong>
-            </div>
+        <div class="col-md-3 form-group">
+          <div class="input-group">
+            <div class="input-group-addon">City</div>
+            <select id="cities" class="form-control selectpicker" data-width="30%" data-live-search="true"
+              title="Select City...">
+            </select>
+          </div>
         </div>
-    </section>
+        <div class="col-md-3 form-group">
+          <div class="input-group">
+            <div class="input-group-addon">Station</div>
+            <select id="stations" class="form-control selectpicker" data-width="30%" data-live-search="true"
+              title="Select Station...">
+            </select>
+          </div>
+        </div>
+        <div class="col-md-2 form-group">
+          <div id="date" class="input-group date">
+            <input type="text" class="form-control" required>
+            <span class="input-group-addon">
+              <i class="glyphicon glyphicon-th"></i>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-2 form-group">
+          <div class="input-group time">
+            <input id="time" type="text" class="form-control" required>
+            <span class="input-group-addon">
+              <i class="glyphicon glyphicon-time"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="row col-md-12-x">
+        <!-- Google Map canvas will be created in this div -->
+        <div id="map-wrapper" class="well-x col-md-5 hidden-sm hidden-xs">
+          <div id="map" class="well-x col-md-5-x"></div>
+        </div>
+        <div id="aqi-info-wrapper" class="col-md-7 col-sm-12 col-xs-12">
+          <div class="overlay">
+            <div class="loader">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <div id="aqi-info">
+          </div>
+        </div>
+      </div>
+      <hr />
+      <!-- <div id="aqi-description" class="row col-md-12-x">
+        <div class="col-md-12">
+          <table class="table panel panel-default table-hover">
+            <thead>
+              <tr class="active">
+                <th class="col-md-1 text-center">AQI</th>
+                <th class="col-md-2 text-center">Remark</th>
+                <th class="col-md-1">Color Code</th>
+                <th class="col-md-7">Possible Health Impacts</th>
+                <th class="col-md-1"><a
+                    style="position: absolute;right: 21px;top: 6px;border: 0px;border-radius: 2px;color: #3498db;cursor:pointer;"
+                    id="downloadExcel"><i class="glyphicon glyphicon-download-alt" style="top: 2px;font-size: 13px"></i>
+                    List of AQI Stations with Data of above selected Date & Time</a>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="aqi-desc-container">
+            </tbody>
+          </table>
+        </div>
+        <hr />
+      </div> -->
+      <div id="city-rankings-wrapper" class="row hide">
+        <div id="city-rankings" class="col-md-12">
+        </div>
+        <hr />
+      </div>
+      <!-- /City rankings container -->
+      <!-- <div id="city-comparison" class="row hide">
+        <h2 class="text-center">Compare Cities</h2>
+        <div class="no-gutter">
+          <div id="city1" class="col-md-3 name">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-addon">City</div>
+                    <select class="form-control selectpicker allcities" data-width="30%" data-live-search="true"
+                      title="Select City...">
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group date compare-date">
+                    <input type="text" class="form-control text-center">
+                    <span class="input-group-addon">
+                      <i class="glyphicon glyphicon-th"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="row city-info">
+              </div>
+            </div>
+          </div> -->
+          <!-- <div id="city2" class="col-md-3 name">          
+              <div class="panel panel-default">
+                <div class="panel-body">        
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-addon">City</div>
+                      <select class="form-control selectpicker allcities" data-width="30%" data-live-search="true"  title="Select City...">
+                      </select>              
+                    </div>            
+                  </div>                
+                  <div class="form-group">
+                    <div  class="input-group date compare-date">
+                      <input type="text" class="form-control text-center">
+                      <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-th"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row city-info">
+                </div>                            
+              </div>
+            </div>
+            <div id="city3" class="col-md-3 name">          
+              <div class="panel panel-default">
+                <div class="panel-body">        
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-addon">City</div>
+                      <select class="form-control allcities selectpicker" data-width="30%" data-live-search="true"  title="Select City...">
+                      </select>              
+                    </div>            
+                  </div>                
+                  <div class="form-group">
+                    <div  class="input-group date compare-date">
+                      <input type="text" class="form-control text-center">
+                      <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-th"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row city-info">
+                </div>                                          
+              </div>
+            </div>
+            <div id="city4" class="col-md-3 name">          
+              <div class="panel panel-default">
+                <div class="panel-body">        
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-addon">City</div>
+                      <select class="form-control allcities selectpicker" data-width="30%" data-live-search="true"  title="Select City...">
+                      </select>              
+                    </div>            
+                  </div>                
+                  <div class="form-group">
+                    <div  class="input-group date compare-date">
+                      <input type="text" class="form-control text-center">
+                      <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-th"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div> -->
+          <div class="row city-info">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- /City comparison container -->
+  <hr />
+  <!--div id="data-availability" class="row col-md-12-x">
+          <div class="col-md-12">
+            <h2 class="text-center">Data Availability</h2>
+            <table class="table panel panel-default table-hover">
+              <thead>
+                <tr class="active">
+                  <th class="col-md-3">Station</th>
+                  <th class="col-md-3">City</th>                                    
+                  <th class="col-md-3">From</th>
+                  <th class="col-md-3">Till</th>
+                </tr>
+              </thead>
+              <tbody class="data-availability-desc">
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <hr/-->
+  <!-- Disclaimer -->
+  <!--
 
-    <!-- Jquery Core Js -->
-    <script src="plugins/jquery/jquery.min.js"></script>
+  <div class="row devbar">
+    <div class="col-md-12 text-center">
+      <a href="http://www.iitk.ac.in" target="_blank">      
+        <img src="assets/images/iitk-logo.png" class="logo" />
+      </a>      
+    </div>
+  </div>
+-->
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <!--h2> Disclaimer </h2-->
+      <!--
+      <div class="text-center">
+        <h5>Developed by <a href="http://www.iitk.ac.in" target="_blank">KL</a></h5>
+      </div>
+-->
+      <!--div class="text-center">
+          <h5>This website is in alpha stage and is for demonstration purpose only. The objective is to provide public access to air quality data.</h5>
+          <h5>The data displayed has been imported from <a target="_blank" href="http://www.cpcb.gov.in/CAAQM/mapPage/frmindiamap.aspx" class="navbar-link">CPCB</a> manually and is prone to human errors.</h5>
+          <h5>Please be advised that we do not guarantee the accuracy or correctness of the data displayed.</h5>
+          <h5>Since the site is just for demonstration the data availablity range for different stations can be seen above. Some data might still be missing because it was missing in the source also.</h5>
+</div-->
+    </div>
+  </div>
+  <!--hr/-->
+  <!-- FOOTER -->
+  <!--div class="text-center">
+          <h5>Supervised by <a target="_blank" href="http://www.iitk.ac.in/new/index.php/arnab-bhattacharya" class="navbar-link">Prof. Arnab Bhattacharya</a> & <a target="_blank" href="http://www.iitk.ac.in/new/index.php/mukesh-sharma" class="navbar-link">Prof. Mukesh Sharma</a></h5>
+          <h5>Developed by <a target="_blank" href="http://in.linkedin.com/pub/sagar-parihar/68/b05/546" class="navbar-link">Sagar Parihar</a> & <a target="_blank" href="http://in.linkedin.com/in/swapnilsm" class="navbar-link">Swapnil Mahajan</a></h5>
+          <h5>IIT Kanpur</h5>
+        </div-->
+  </div> <!-- /container -->
+  <div class="footer navbar-default navbar-fixed-bottom hide">
+    <div class="container-x">
+      <div class="col-md-5">
+        <p class="navbar-text navbar-left">Supervised by Prof. Arnab Bhattacharya & Prof. Mukesh Sharma</p>
+      </div>
+      <div class="col-md-2">
+        <p class="navbar-text">IIT Kanpur</p>
+      </div>
+      <div class="col-md-5">
+        <p class="navbar-text navbar-right">Developed by <a target="_blank"
+            href="http://in.linkedin.com/pub/sagar-parihar/68/b05/546" class="navbar-link">Sagar Parihar</a> & <a
+            target="_blank" href="http://in.linkedin.com/in/swapnilsm" class="navbar-link">Swapnil Mahajan</a></p>
+      </div>
+    </div>
+  </div>
+  </div> <!-- /container -->
+  <!-- Templates to be used to create elements -->
+  <div style="display: none" class="panel panel-default panel-template aqi-panel">
+    <!-- <div class="panel-heading"> -->
+    <!--   <h3 class="panel-title">Station, City, State</h3> -->
+    <!-- </div> -->
+    <div id="data-available-panel" class="panel-body">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="aqi-meter-panel">
+            <div id="aqi-meter" class="aqi-meter" style="height:150px">
+            </div>
+            <div class="insuf-data-panel well">
+              Insufficient data for computing AQI
+            </div>
+            <div class="station-down-panel well" id="station-down-message">
 
-    <!-- Bootstrap Core Js -->
-    <script src="plugins/bootstrap/js/bootstrap.js"></script>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <table class="table table-condensed">
+            <tr class="active">
+              <td class="title">
+              </td>
+            </tr>
+            <tr>
+              <td>Prominent Pollutant is <big><span class="prominent-param label label-default"></span></big></td>
+            </tr>
+            <tr>
+              <td>On <big><span class="date-on label label-info"></span></big></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <table class="table table-hover table-condensed">
+        <thead>
+          <tr>
+            <th class="col-md-1 col-sm-1 col-xs-1">Pollutant</th>
+            <th class="col-md-8 col-sm-8 col-xs-8 text-center">Timeline</th>
+            <th class="col-md-1 col-sm-1 col-xs-1" title="Average">Avg</th>
+            <th class="col-md-1 col-sm-1 col-xs-1" title="Minimum">Min</th>
+            <th class="col-md-1 col-sm-1 col-xs-1" title="Maximum">Max</th>
+          </tr>
+        </thead>
+        <tbody class="metrics-container"></tbody>
+      </table>
+    </div>
+    <div id="no-data-panel" class="panel-body text-center">
+      <h1> No Data Available </h1>
+    </div>
+    <div id="no-response-panel" class="panel-body text-center">
+      <h1> Network Error </h1>
+      <h3> No response from server. </h3>
+    </div>
+  </div>
+  <!-- Graphs Row Template -->
+  <table class="row" style="display:none">
+    <tr class="metrics-row metrics-row-template" style="display:none">
+      <td class="element-name">Name</td>
+      <td class="graph-container">Graph</td>
+      <td class="avg-value">Avg</td>
+      <td class="min-value">Min</td>
+      <td class="max-value">Max</td>
+    </tr>
+  </table>
+  <!-- Aqi Description Row Template-->
+  <table class="row" style="display:none">
+    <tr class="aqi-desc-row-template" style="display:none">
+      <td class="col-md-1 aqi-value text-center text-middle"></td>
+      <td class="col-md-2 remark text-center text-middle"></td>
+      <td class="col-md-1 color-code"></td>
+      <td class="col-md-8 desc"></td>
+    </tr>
+  </table>
+  <!-- Rankings Template -->
+  <div class="rankings-template">
+    <h2 class="title text-center"></h2>
+    <table class="table table-hover">
+      <thead>
+        <tr class="active">
+          <th class="col-md-1 text-center">AQI</th>
+          <th class="col-md-2 text-center">Remark</th>
+          <th class="col-md-1">Color Code</th>
+          <th class="col-md-7">Possible Health Impacts</th>
+          <th class="col-md-1"><a
+              style="position: absolute;right: 21px;top: 6px;border: 0px;border-radius: 2px;color: #3498db;cursor:pointer;"
+              id="downloadExcel"><i class="glyphicon glyphicon-download-alt" style="top: 2px;font-size: 13px"></i> List
+              of AQI Stations with Data of above selected Date &amp; Time</a>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="aqi-desc-container">
+        <tr>
+          <td class="col-md-1 aqi-value text-center text-middle">0-50</td>
+          <td class="col-md-2 remark text-center text-middle">Good</td>
+          <td class="col-md-1 color-code" style="background-color: rgb(0, 176, 80);"></td>
+          <td class="col-md-8 desc">Minimal impact</td>
+        </tr>
+        <tr>
+          <td class="col-md-1 aqi-value text-center text-middle">51-100</td>
+          <td class="col-md-2 remark text-center text-middle">Satisfactory</td>
+          <td class="col-md-1 color-code" style="background-color: rgb(146, 208, 80);"></td>
+          <td class="col-md-8 desc">Minor breathing discomfort to sensitive people</td>
+        </tr>
+        <tr>
+          <td class="col-md-1 aqi-value text-center text-middle">101-200</td>
+          <td class="col-md-2 remark text-center text-middle">Moderate</td>
+          <td class="col-md-1 color-code" style="background-color: rgb(255, 255, 0);"></td>
+          <td class="col-md-8 desc">Breathing discomfort to the people with lungs, asthma and heart diseases</td>
+        </tr>
+        <tr >
+          <td class="col-md-1 aqi-value text-center text-middle">201-300</td>
+          <td class="col-md-2 remark text-center text-middle">Poor</td>
+          <td class="col-md-1 color-code" style="background-color: rgb(255, 153, 0);"></td>
+          <td class="col-md-8 desc">Breathing discomfort to most people on prolonged exposure</td>
+        </tr>
+        <tr >
+          <td class="col-md-1 aqi-value text-center text-middle">301-400</td>
+          <td class="col-md-2 remark text-center text-middle">Very Poor</td>
+          <td class="col-md-1 color-code" style="background-color: rgb(255, 0, 0);"></td>
+          <td class="col-md-8 desc">Respiratory illness on prolonged exposure</td>
+        </tr>
+        <tr >
+          <td class="col-md-1 aqi-value text-center text-middle">401-500</td>
+          <td class="col-md-2 remark text-center text-middle">Severe</td>
+          <td class="col-md-1 color-code" style="background-color: rgb(192, 0, 0);"></td>
+          <td class="col-md-8 desc">Affects healthy people and seriously impacts those with existing diseases</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Rankings Row Template -->
+  <table class="row" style="display:none">
+    <tr class="rankings-row rankings-row-template" style="display:none">
+      <td class="col-md-2 text-center rank"></td>
+      <td class="col-md-3 city"></td>
+      <td class="col-md-3 state"></td>
+      <td class="col-md-3 text-center remark"></td>
+      <td class="col-md-1 text-center value"></td>
+    </tr>
+  </table>
+  <!--Comparason Panel-->
+  <div class="compare-template" style="display:none">
+    <div class="col-md-12">
+      <div class="aqi-meter" style="height:150px">
+      </div>
+    </div>
+    <div class="col-md-12">
+      <table class="table table-hover table-condensed">
+        <thead>
+          <tr>
+            <th class="col-md-1">Element</th>
+            <th class="col-md-8 text-center">Timeline</th>
+            <th class="col-md-1">Avg</th>
+            <th class="col-md-1">Min</th>
+            <th class="col-md-1">Max</th>
+          </tr>
+        </thead>
+        <tbody class="metrics-container"></tbody>
+      </table>
+    </div>
+  </div>
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="assets/javascripts/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="assets/javascripts/eventemitter2.js"></script>
+  <script src="assets/javascripts/underscore.min.js"></script>
+  <script src="assets/javascripts/prefixfree.min.js"></script>
+  <!-- Google Maps Scripts -->
+  <script src="https://apis.mapmyindia.com/advancedmaps/v1/fxg5xxjyla88nsuwhengavq9roz2lred/map_load?v=1.3"></script>
+  <!-- <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAs-TUUQ8NnzWOAl_C0-eZDZxiA8rUKpSk"></script> -->
 
-    <!-- Select Plugin Js -->
-    <script src="plugins/bootstrap-select/js/bootstrap-select.js"></script>
+  <!-- JustGage Scripts -->
+  <script src="assets/javascripts/raphael.2.1.2.min.js"></script>
+  <script src="assets/javascripts/justgage.js"></script>
+  <!--[if lte IE 8]><script type="text/javascript" src="assets/javascripts/excanvas.min.js"></script><![endif]-->
+  <!-- Bootstrap Scripts -->
+  <script src="assets/javascripts/bootstrap.min.js"></script>
+  <script src="assets/javascripts/scrollspy.js"></script>
+  <script src="assets/javascripts/bootstrap-datepicker.min.js"></script>
+  <!-- Bootstrap Sortable -->
+  <script src="assets/javascripts/moment.min.js"></script>
+  <script src="assets/javascripts/bootstrap-sortable.js"></script>
+  <script src="assets/javascripts/d3.min.js"></script>
+  <script src="assets/javascripts/bootstrap-timepicker.min.js"></script>
+  <script src="assets/javascripts/jquery.filedownload.min.js"></script>
+  <!--script src="assets/javascripts/bootstrap-select.min.js"></script-->
+  <!-- Application Modules -->
+  <script src="assets/javascripts/air.js"></script>
+  <script src="assets/javascripts/airuimap.js"></script>
+  <script src="assets/javascripts/airuipanel.js"></script>
+  <script src="assets/javascripts/airuicomparator.js"></script>
+  <script src="assets/javascripts/airuirankings.js"></script>
+  <script src="assets/javascripts/airui.js"></script>
+  <script src="assets/javascripts/app.js"></script>
+  <!-- <script src="assets/javascripts/log.js"></script> -->
+  <script src="assets/javascripts/quickfix.js"></script>
+  <!-- Testing scripts -->
+  <!-- Google Charts Scripts -->
+  <!--script type="text/javascript" src="//www.google.com/jsapi"></script-->
+  <script type="text/javascript" src='http://www.google.com/jsapi?autoload={%22modules%22:[{%22name%22:%22visualization%22,%22version%22:%221%22,%22packages%22:[%22corechart%22]}]}'>
+    </script>    
+    <!--script type="text/javascript">
+      //google.load('visualization', '1', {packages: ["corechart"]});
+    </script-->    
+   <!-- <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    <!-- Slimscroll Plugin Js -->
-    <script src="plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+    ga('create', 'UA-61639215-1', 'auto');
+    ga('send', 'pageview');
+    </script>-->
+<!-- New script added by Nishant - 19th aug 2015 -->
+	<!-- <script>
+  	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
 
-    <!-- Waves Effect Plugin Js -->
-    <script src="plugins/node-waves/waves.js"></script>
+  	ga('create', 'UA-66500699-1', 'auto');
+  	ga('send', 'pageview');
 
-    <!-- Jquery CountTo Plugin Js -->
-    <script src="plugins/jquery-countto/jquery.countTo.js"></script>
+	</script> -->
+  </body>
 
-    <!-- Morris Plugin Js -->
-    <script src="plugins/raphael/raphael.min.js"></script>
-    <!-- <script src="plugins/morrisjs/morris.js"></script> -->
-
-    <!-- ChartJs -->
-    <script src="plugins/chartjs/Chart.bundle.js"></script>
-
-    <!-- Flot Charts Plugin Js -->
-    <script src="plugins/flot-charts/jquery.flot.js"></script>
-    <script src="plugins/flot-charts/jquery.flot.resize.js"></script>
-    <script src="plugins/flot-charts/jquery.flot.pie.js"></script>
-    <script src="plugins/flot-charts/jquery.flot.categories.js"></script>
-    <script src="plugins/flot-charts/jquery.flot.time.js"></script>
-
-    <!-- Sparkline Chart Plugin Js -->
-    <script src="plugins/jquery-sparkline/jquery.sparkline.js"></script>
-
-    <script src="js/pages/charts/sparkline.js"></script>
-
-        <!-- Jquery Knob Plugin Js -->
-        <script src="plugins/jquery-knob/jquery.knob.min.js"></script>
-        <script src="js/pages/charts/jquery-knob.js"></script>
-
-
-    <!-- Custom Js -->
-    <script src="js/admin.js"></script>
-    <script src="js/pages/index.js"></script>
-    <script src="js/pages/maps/jvectormap.js"></script>
-
-    <!-- JVectorMap Plugin Js -->
-    <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-    <!-- <script src="../../plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script> -->
-    <script src="plugins/jvectormap/jquery-jvectormap-in-merc.js"></script>
-
-    <script src="https://kit.fontawesome.com/0ad1d9f295.js" crossorigin="anonymous"></script>
-    <!-- Demo Js -->
-    <script src="js/demo.js"></script>
-    <script src="js/map.js"></script>
-</body>
-
+<!-- Mirrored from app.cpcbccr.com/AQI_India/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Feb 2020 06:16:03 GMT -->
 </html>
