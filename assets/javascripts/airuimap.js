@@ -133,7 +133,7 @@ var AirUIMap = function (airObj) {
     // if(station.live)
     //   google.maps.event.addListener(marker, 'click', stationClicked);
     // return marker;
-    console.log(map)
+    // console.log(map)
     let tempMk = new L.marker([station.latitude, station.longitude]).addTo(map);
     tempMk.on("click", function (e) {
       console.log(station);
