@@ -21,7 +21,7 @@ var Air = function () {
       "time": currentTimeObj.getTime(),
       "timeZoneOffset": currentTimeObj.getTimezoneOffset()
     };
-    fetch("https://app.cpcbccr.com/aqi_dashboard/aqi_station_all_india", {
+    fetch("https://ceeri-dashboard.bits-dvm.org/back/https://app.cpcbccr.com/aqi_dashboard/aqi_station_all_india", {
         method: 'POST', // or 'PUT'
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -116,7 +116,7 @@ var Air = function () {
     var accessToken = {"time":currentTimeObj.getTime(), "timeZoneOffset":currentTimeObj.getTimezoneOffset()};
     console.log(accessToken)
       return $.ajax({
-        url : "https://app.cpcbccr.com/aqi_dashboard/aqi_all_Parameters",
+        url : "https://ceeri-dashboard.bits-dvm.org/back/https://app.cpcbccr.com/aqi_dashboard/aqi_all_Parameters",
         // url : "http://172.30.14.63:8084/aqi_all_Parameters",
         type : 'POST',
         dataType : "json",

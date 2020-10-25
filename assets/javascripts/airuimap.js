@@ -9,7 +9,7 @@ var AirUIMap = function (airObj) {
   var loaded = false;
   var loadedMap = false;
   let data_response;
-  let url = "https://app.cpcbccr.com/caaqms/caaqms_landing_map_all";
+  let url = "https://ceeri-dashboard.bits-dvm.org/back/https://app.cpcbccr.com/caaqms/caaqms_landing_map_all";
 
   function isVisible() {
     return $("#" + MAP_ID).is(':visible');

@@ -198,7 +198,7 @@ var AirUI = function(airObj) {
   	var currentTimeObj =  new Date();
   	var accessToken = {"time":currentTimeObj.getTime(), "timeZoneOffset":currentTimeObj.getTimezoneOffset()};
       $.ajax({
-        url : "https://app.cpcbccr.com/aqi_dashboard/aqi_all_parameter_excel",
+        url : "https://ceeri-dashboard.bits-dvm.org/back/https://app.cpcbccr.com/aqi_dashboard/aqi_all_parameter_excel",
         type : 'POST',
         dataType : "json",
   	  headers: {
@@ -415,7 +415,7 @@ var AirUI = function(airObj) {
     var currentTimeObj =  new Date();
     var accessToken = {"time":currentTimeObj.getTime(), "timeZoneOffset":currentTimeObj.getTimezoneOffset()};
       $.ajax({
-        url : "https://app.cpcbccr.com/caaqms/ReportRedirections",
+        url : "https://ceeri-dashboard.bits-dvm.org/back/https://app.cpcbccr.com/caaqms/ReportRedirections",
         type : 'POST',
         crossDomain : true,
         data : window.btoa(JSON.stringify(body)),
@@ -423,7 +423,7 @@ var AirUI = function(airObj) {
         //contentType : "application/x-www-form-urlencoded; charset=UTF-8",
         success : function(data) {
         if(data.status == 'success'){
-          $.fileDownload('https://app.cpcbccr.com/caaqms/download?filename='+data.filename)
+          $.fileDownload('https://ceeri-dashboard.bits-dvm.org/back/https://app.cpcbccr.com/caaqms/download?filename='+data.filename)
           .done(function(){  
             /*$('#downloadExcel i').removeClass('glyphicon-refresh');
             $('#downloadExcel i').addClass('glyphicon-download-alt');
