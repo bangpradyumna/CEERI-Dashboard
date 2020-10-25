@@ -64,7 +64,7 @@
     <div id="station-aqi" class="container-x">
       <!--h2 class="text-center">Station AQI</h2-->
       <div class="row">
-        <div class="col-md-2 form-group nullable">
+        <div class="col-md-4 form-group nullable">
           <div class="input-group">
             <div class="input-group-addon">State</div>
             <select id="states" style="padding:0px;" class="form-control selectpicker" data-width="30%"
@@ -72,7 +72,7 @@
             </select>
           </div>
         </div>
-        <div class="col-md-3 form-group">
+        <div class="col-md-4 form-group">
           <div class="input-group">
             <div class="input-group-addon">City</div>
             <select id="cities" class="form-control selectpicker" data-width="30%" data-live-search="true"
@@ -80,7 +80,7 @@
             </select>
           </div>
         </div>
-        <div class="col-md-3 form-group">
+        <div class="col-md-4 form-group">
           <div class="input-group">
             <div class="input-group-addon">Station</div>
             <select id="stations" class="form-control selectpicker" data-width="30%" data-live-search="true"
@@ -88,7 +88,9 @@
             </select>
           </div>
         </div>
-        <div class="col-md-2 form-group">
+      </div>
+      <div class="row">
+        <div class="col-md-3 form-group">
           <div id="date" class="input-group date">
             <input type="text" class="form-control" required>
             <span class="input-group-addon">
@@ -103,6 +105,25 @@
               <i class="glyphicon glyphicon-time"></i>
             </span>
           </div>
+        </div>
+        <div class="col-md-3 form-group">
+          <div id="date2" class="input-group date">
+            <input type="text" class="form-control" required>
+            <span class="input-group-addon">
+              <i class="glyphicon glyphicon-th"></i>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-2 form-group">
+          <div class="input-group time">
+            <input id="time2" type="text" class="form-control" required>
+            <span class="input-group-addon">
+              <i class="glyphicon glyphicon-time"></i>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-2 form-group">
+          <button type="button" id="downloadData" class="btn btn-primary btn-md btn-block">Download Excel</button>
         </div>
       </div>
       <div class="row col-md-12-x">

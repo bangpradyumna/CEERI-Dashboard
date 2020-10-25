@@ -40,6 +40,7 @@ var AirUI = function(airObj) {
     $cities = $("#cities");
     $stations = $("#stations");
     $date = $("#date");
+    $date2 = $("#date2");
 
     initializeDatepicker(datepickerOptions);
     // map.initialize();
@@ -54,7 +55,10 @@ var AirUI = function(airObj) {
   function initializeDatepicker(options) {
     $date.datepicker(options);
     $date.datepicker('setDate', moment().format('DD/MM/YYYY'));
+    $date2.datepicker(options);
+    $date2.datepicker('setDate', moment().format('DD/MM/YYYY'));
 	$('#time').timepicker({minuteStep: 60,showMeridian:false});
+	$('#time2').timepicker({minuteStep: 60,showMeridian:false});
 	var time = $('#time').val();
 	time = parseInt(time.split(':')[0])-1;
 	if(time == -1){
@@ -62,7 +66,8 @@ var AirUI = function(airObj) {
 	}
 	currentTime = time+':00';
 	$('#time').timepicker('setTime', time+':00');
-	
+	$('#time2').timepicker('setTime', time+':00');
+
   }
 
   function populateAQIDescTable(brkpts) {
@@ -229,8 +234,221 @@ var AirUI = function(airObj) {
             console.log( data);
         }
       });
-	  
   }
+
+  function downloadData(){
+
+    var body = {
+      "parameter_list":[
+         {
+            "id":0,
+            "itemName":"AT",
+            "itemValue":"parameter_204"
+         },
+         {
+            "id":1,
+            "itemName":"BP",
+            "itemValue":"parameter_238"
+         },
+         {
+            "id":2,
+            "itemName":"PM10",
+            "itemValue":"parameter_215"
+         },
+         {
+            "id":3,
+            "itemName":"PM2.5",
+            "itemValue":"parameter_193"
+         },
+         {
+            "id":4,
+            "itemName":"RH",
+            "itemValue":"parameter_235"
+         },
+         {
+            "id":5,
+            "itemName":"SR",
+            "itemValue":"parameter_237"
+         },
+         {
+            "id":6,
+            "itemName":"Temp",
+            "itemValue":"parameter_198"
+         },
+         {
+            "id":7,
+            "itemName":"Toluene",
+            "itemValue":"parameter_232"
+         },
+         {
+            "id":8,
+            "itemName":"WD",
+            "itemValue":"parameter_234"
+         },
+         {
+            "id":9,
+            "itemName":"WS",
+            "itemValue":"parameter_233"
+         },
+         {
+            "id":10,
+            "itemName":"CO",
+            "itemValue":"parameter_203"
+         },
+         {
+            "id":11,
+            "itemName":"Benzene",
+            "itemValue":"parameter_202"
+         },
+         {
+            "id":12,
+            "itemName":"P-Xylene",
+            "itemValue":"parameter_324"
+         },
+         {
+            "id":13,
+            "itemName":"NH3",
+            "itemValue":"parameter_311"
+         },
+         {
+            "id":14,
+            "itemName":"NO",
+            "itemValue":"parameter_226"
+         },
+         {
+            "id":15,
+            "itemName":"NO2",
+            "itemValue":"parameter_194"
+         },
+         {
+            "id":16,
+            "itemName":"NOx",
+            "itemValue":"parameter_225"
+         },
+         {
+            "id":17,
+            "itemName":"Ozone",
+            "itemValue":"parameter_222"
+         },
+         {
+            "id":18,
+            "itemName":"SO2",
+            "itemValue":"parameter_312"
+         }
+      ],
+      "criteria":"1 Hours",
+      "reportFormat":"Tabular",
+      "fromDate":"16-10-2020 T00:00:00Z",
+      "toDate":"17-10-2020 T00:17:59Z",
+      "state":"Delhi",
+      "city":"Delhi",
+      "station":"site_301",
+      "parameter":[
+         "parameter_204",
+         "parameter_238",
+         "parameter_215",
+         "parameter_193",
+         "parameter_235",
+         "parameter_237",
+         "parameter_198",
+         "parameter_232",
+         "parameter_234",
+         "parameter_233",
+         "parameter_203",
+         "parameter_202",
+         "parameter_324",
+         "parameter_311",
+         "parameter_226",
+         "parameter_194",
+         "parameter_225",
+         "parameter_222",
+         "parameter_312"
+      ],
+      "parameterNames":[
+         "AT",
+         "BP",
+         "PM10",
+         "PM2.5",
+         "RH",
+         "SR",
+         "Temp",
+         "Toluene",
+         "WD",
+         "WS",
+         "CO",
+         "Benzene",
+         "P-Xylene",
+         "NH3",
+         "NO",
+         "NO2",
+         "NOx",
+         "Ozone",
+         "SO2"
+      ],
+      "type":"excel"
+   }
+
+    var stationID = $stations.find(":selected").val();
+    body.station = stationID;
+    var state = $states.find(":selected").val();
+    body.state = state;
+    var city = $cities.find(":selected").val();
+    body.city = city;
+    if ( stationID == -1) return;
+    var hours1 = $('#time').val();
+    var date1 = $date.find("input").val();
+    var tmpData = date1.split('/');
+    date1 = tmpData[0]+'-'+tmpData[1]+"-"+tmpData[2]+"T"+hours1+":00Z";
+
+    body.fromDate = date1;
+    
+    var hours2 = $('#time2').val();
+    var date2 = $date2.find("input").val();
+    var tmpData = date2.split('/');
+    date2 = tmpData[0]+'-'+tmpData[1]+"-"+tmpData[2]+"T"+hours2+":00Z";
+
+    body.toDate = date2;
+
+    /*$('#downloadExcel i').removeClass('glyphicon-download-alt');
+    $('#downloadExcel i').addClass('glyphicon-refresh');
+    $('#downloadExcel').attr('disabled','true');*/
+    var currentTimeObj =  new Date();
+    var accessToken = {"time":currentTimeObj.getTime(), "timeZoneOffset":currentTimeObj.getTimezoneOffset()};
+      $.ajax({
+        url : "https://app.cpcbccr.com/caaqms/ReportRedirections",
+        type : 'POST',
+        crossDomain : true,
+        data : window.btoa(JSON.stringify(body)),
+        // data : JSON.stringify({"station_id":id+"", date:date}),
+        //contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        success : function(data) {
+        if(data.status == 'success'){
+          $.fileDownload('https://app.cpcbccr.com/caaqms/download?filename='+data.filename)
+          .done(function(){  
+            /*$('#downloadExcel i').removeClass('glyphicon-refresh');
+            $('#downloadExcel i').addClass('glyphicon-download-alt');
+            $('#downloadExcel').attr('disabled','false');*/
+          })
+          .fail(function () { alert('File download failed!'); });
+          
+          /*$.fileDownload('/aqi_dashboard/download?filename='+data.filename, {
+          successCallback: function (url) {
+            $('#downloadExcel i').removeClass('glyphicon-refresh');
+            $('#downloadExcel i').addClass('glyphicon-download-alt');
+            $('#downloadExcel').attr('disabled','false');
+          },
+          failCallback: function (responseHtml, url){
+            $('#downloadExcel i').removeClass('glyphicon-refresh');
+            $('#downloadExcel i').addClass('glyphicon-download-alt');
+            $('#downloadExcel').attr('disabled','false');
+          }
+          });*/
+        }
+            console.log( data);
+        }
+      });
+    }
+  
 
   function bindEvents() {
     /* Map event binding */
@@ -246,6 +464,7 @@ var AirUI = function(airObj) {
     $date.datepicker().on('changeDate', dateChanged);
 	$('#time').change(timeChanged);
 	$('#downloadExcel').on("click", downloadExcel);
+	$('#downloadData').on("click", downloadData);
 	
   }
 
