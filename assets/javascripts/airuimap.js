@@ -45,7 +45,7 @@ var AirUIMap = function (airObj) {
     fetch(url, {
         method: 'POST', // or 'PUT'
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'text/plain',
         },
         body: btoa(JSON.stringify({
           "region": "landing_dashboard"

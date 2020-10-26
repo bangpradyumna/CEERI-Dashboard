@@ -24,7 +24,7 @@ var Air = function () {
     fetch("https://ceeri-dashboard.bits-dvm.org/back/https://app.cpcbccr.com/aqi_dashboard/aqi_station_all_india", {
         method: 'POST', // or 'PUT'
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'text/plain',
         },
         body: btoa(JSON.stringify({})),
       })
@@ -55,7 +55,7 @@ var Air = function () {
     //     crossDomain : true,
     //     data : window.btoa('{}'),
     //     // data : '{"type":"PM"}',
-    //     //contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+    //     //contentType : "text/plain; charset=UTF-8",
     //     success : function(data) {
     //       if ( !data ) return null;
     //       self.data = data;
@@ -84,7 +84,7 @@ var Air = function () {
     // return fetch("https://app.cpcbccr.com/aqi_dashboard/aqi_all_Parameters", {
     //     method: 'POST', // or 'PUT'
     //     headers: {
-    //       'Content-Type': 'application/x-www-form-urlencoded',
+    //       'Content-Type': 'text/plain',
     //     },
     //     body: window.btoa(JSON.stringify({"station_id":id+"", date:date})),
     //   })
@@ -124,7 +124,7 @@ var Air = function () {
         crossDomain : true,
         data : btoa(JSON.stringify({"station_id":id, date:date})),
         // data : JSON.stringify({"station_id":id+"", date:date}),
-        //contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        //contentType : "text/plain; charset=UTF-8",
         success : function(data) {
             return data;
         }

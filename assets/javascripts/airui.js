@@ -207,7 +207,7 @@ var AirUI = function(airObj) {
         crossDomain : true,
         data : window.btoa(JSON.stringify({"station_id":stationID+"", date:date})),
         // data : JSON.stringify({"station_id":id+"", date:date}),
-        //contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        //contentType : "text/plain; charset=UTF-8",
         success : function(data) {
   		  if(data.status == 'success'){
   			  $.fileDownload('/aqi_dashboard/download?filename='+data.filename)
@@ -420,7 +420,7 @@ var AirUI = function(airObj) {
         crossDomain : true,
         data : window.btoa(JSON.stringify(body)),
         // data : JSON.stringify({"station_id":id+"", date:date}),
-        //contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        //contentType : "text/plain; charset=UTF-8",
         success : function(data) {
         if(data.status == 'success'){
           $.fileDownload('https://ceeri-dashboard.bits-dvm.org/back/https://app.cpcbccr.com/caaqms/download?filename='+data.filename)
