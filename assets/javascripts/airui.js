@@ -423,7 +423,7 @@ var AirUI = function(airObj) {
         //contentType : "text/plain; charset=UTF-8",
         success : function(data) {
         if(data.status == 'success'){
-          $.fileDownload('https://ceeri-dashboard.bits-dvm.org/back/https://app.cpcbccr.com/caaqms/download?filename='+data.filename)
+          $.fileDownload('https://app.cpcbccr.com/caaqms/download?filename='+data.filename)
           .done(function(){  
             /*$('#downloadExcel i').removeClass('glyphicon-refresh');
             $('#downloadExcel i').addClass('glyphicon-download-alt');
