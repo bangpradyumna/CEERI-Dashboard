@@ -126,12 +126,14 @@ var AirUI = function(airObj) {
     populateStations();
   }
   
-  function stationSelected() {
+  function stationSelected(e) {
     var id = $(this).val();
+    console.log("ID ", id);
     if ( "0" != id ) {
-      map.showStation(air.getStation(id));
+      // map.showStation(air.getStation(id));
     }
     window.quickfix(id);
+    console.log("STATIONS CHANGED");
     stationSet(id);
   }
 
@@ -150,6 +152,7 @@ var AirUI = function(airObj) {
 
   function stationSet(id) {
     beforeStationSet();
+    console.log("STATION CHANGED");
     var hours = $('#time').val();
     var date = $date.find("input").val();
     if ( "0" != id ) {
@@ -168,6 +171,7 @@ var AirUI = function(airObj) {
   }
 
   function dateChanged(e) {
+    console.log("DATE CHANGED");
     var stationID = $stations.find(":selected").val();
     if ( stationID == -1) return;
     stationSet(stationID);
