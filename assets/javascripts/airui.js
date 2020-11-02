@@ -86,18 +86,15 @@ var AirUI = function(airObj) {
 
   function stationClicked(id) {
     //window.quickfix(id);
-    console.log(id)
     self.emit('stationClick', id);
     var station = air.getStation(id);
   // console.log('Id - '+id);
-  console.log(station)
     setDropdowns(station.stateID, station.cityID, station.id);
     loading = false;
   }
 
   function setDropdowns(stateID, cityID, stationID) {
     clearStates();
-    console.log('clicked')
     populateStates();
     $states.val(stateID);    
     clearCities();
@@ -128,12 +125,10 @@ var AirUI = function(airObj) {
   
   function stationSelected(e) {
     var id = $(this).val();
-    console.log("ID ", id);
     if ( "0" != id ) {
       // map.showStation(air.getStation(id));
     }
     window.quickfix(id);
-    console.log("STATIONS CHANGED");
     stationSet(id);
   }
 
@@ -152,18 +147,31 @@ var AirUI = function(airObj) {
 
   function stationSet(id) {
     beforeStationSet();
-    console.log("STATION CHANGED");
     var hours = $('#time').val();
     var date = $date.find("input").val();
     if ( "0" != id ) {
-      air.getStationMetrics(id, date, hours)
-      .done(drawPanel)
-      .fail(onJSONFail)
-      .always(afterStationSet);
+      $.when(air.getStationMetrics(id, date, hours), air.getAllParameters(id, date, hours))
+        .done(function(d1, d2) {
+            drawPanel({
+              data: d1, 
+              allData: d2,
+            })
+          })
+        .fail(onJSONFail)
+        .always(afterStationSet);
+      // air.getStationMetrics(id, date, hours)
+      // .done(drawPanel)
+      // .fail(onJSONFail)
+      // .always(afterStationSet);
        
     } else {
-      air.getCityMetrics($cities.find(":selected").val(), date, hours) 
-      .done(drawPanel)
+      $.when(air.getStationMetrics(id, date, hours), air.getAllParameters(id, date, hours))
+      .done(function(d1, d2) {
+          drawPanel({
+            data: d1, 
+            allData: d2,
+          })
+        })
       .fail(onJSONFail)
       .always(afterStationSet);
     }
@@ -171,7 +179,6 @@ var AirUI = function(airObj) {
   }
 
   function dateChanged(e) {
-    console.log("DATE CHANGED");
     var stationID = $stations.find(":selected").val();
     if ( stationID == -1) return;
     stationSet(stationID);
@@ -235,7 +242,6 @@ var AirUI = function(airObj) {
   				}
   			  });*/
   		  }
-            console.log( data);
         }
       });
   }
@@ -448,7 +454,6 @@ var AirUI = function(airObj) {
           }
           });*/
         }
-            console.log( data);
         }
       });
     }
@@ -553,16 +558,16 @@ var AirUI = function(airObj) {
 
   function drawPanel(data) {
       if(onLoad){
-        if(data.aqi != null && data.down != "true"){
+        if(data.data[0].aqi != null && data.data[0].down != "true"){
             onLoad = false;
-            var panel = new AirUIPanel($("#aqi-info"), "panel-template", self.config, data);
+            var panel = new AirUIPanel($("#aqi-info"), "panel-template", self.config, data.data[0], data.allData[0].data);
             panel.draw();
           // $('#downloadExcel').click(downloadExcel)
         }
       }else{
-        if(data.aqi != null){
+        if(data.data[0].aqi != null){
             onLoad = false;
-            var panel = new AirUIPanel($("#aqi-info"), "panel-template", self.config, data);
+            var panel = new AirUIPanel($("#aqi-info"), "panel-template", self.config, data.data[0], data.allData[0].data);
             panel.draw();
           // $('#downloadExcel').click(downloadExcel)
         }else{

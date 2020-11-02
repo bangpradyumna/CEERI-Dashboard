@@ -1,27 +1,31 @@
-var AirUIPanel = function($papa, templateClass, options, data) {
-
-  if( !data || !data.metrics || !data.metrics.length ) {
+var AirUIPanel = function($papa, templateClass, options, data, allData) {
+  if (!data || !data.metrics || !data.metrics.length) {
     $papa.addClass("no-data");
   }
 
+  var chartData = [];
+  console.log(data);
   var $panel;
-  $panel = $("."+templateClass).clone().removeClass(templateClass).css("display", "");
+  $panel = $("." + templateClass)
+    .clone()
+    .removeClass(templateClass)
+    .css("display", "");
   $panel.find(".title").text(data.title);
   $panel.find(".prominent-param").text(data.aqi.param);
-  $panel.find(".date-on").text(data.date);  
+  $panel.find(".date-on").text(data.date);
 
   var gaugeOptions = {
     parentNode: $panel.find(".aqi-meter").get(0),
     value: data.aqi.value,
     min: 0,
     max: 500,
-    startAnimationType : "linear",
-    startAnimationTime : 0,
+    startAnimationType: "linear",
+    startAnimationTime: 0,
     title: data.aqi.remark,
-    titleFontColor: "black",//data.aqi.color,
+    titleFontColor: "black", //data.aqi.color,
     label: "AQI",
     showMinMax: true,
-    levelColorsGradient: false,      
+    levelColorsGradient: false
     //levelColors: genGaugeColors(options.breakpoints)
     // customSectors: genCustomSectors(options.breakpoints)
   };
@@ -44,14 +48,14 @@ var AirUIPanel = function($papa, templateClass, options, data) {
     hAxis: {
       textPosition: "none",
       baselineColor: "transparent"
-    }//,
+    } //,
     // animation: {
     //   duration: 1000,
     //   easing: "out"
     // },
     // explorer: {
     //   maxZoomOut:0,
-    //   maxZoomIn:1,      
+    //   maxZoomIn:1,
     //   keepInBounds: true
     // }
   };
@@ -67,13 +71,12 @@ var AirUIPanel = function($papa, templateClass, options, data) {
       textPosition: "out",
       format: "haa, EEE",
       baselineColor: "transparent"
-    }// ,
+    } // ,
     // explorer: {
     //   maxZoomOut:0,
     //   maxZoomIn:1,
     //   keepInBounds: true
     // }
-    
   };
 
   function preProcessData() {
@@ -153,18 +156,54 @@ var AirUIPanel = function($papa, templateClass, options, data) {
         data.metrics[i].hideStats = true;
       }
     }*/
-	for(i in data.metrics) {
-		for(j in data.chartData[i]) {
-			data.chartData[i][j][2] = ColorReplace(data.chartData[i][j][1]);
-			//console.log(data.chartData[i][j][2]);
-		}
-		if(typeof(data.chartData) != "undefined" && typeof(data.chartData[i]) != "undefined"){
-			data.metrics[i].data = data.chartData[i];
-		}
+    console.log(allData);
+    var k = 0;
+    for(i in allData.siteInfo.parameters) {
+      const param = allData.siteInfo.parameters[i];
+      chartData[k] = {};
+      var datas = [];
+      var min = 9999, max = 0, avg = 0;
+      for(let j = 0; j < 24; j++) {
+        datas[j] = [];
+        datas[j][1] = parseFloat(allData.tabularData.bodyContent[j][param]);
+        datas[j][0] = allData.tabularData.bodyContent[j]['from date'];
+        datas[j][2] = ColorReplace( datas[j][1]);
+        if(allData.tabularData.bodyContent[j][param] == null) {
+          datas[j][1] = null;
+          continue;
+        }
+        if(datas[j][1] < min)
+          min = datas[j][1];
+        if(datas[j][1] > max)
+          max = datas[j][1];
+        avg += datas[j][1] / 24;
+      }
+      if(min == 9999)
+        continue;
+      chartData[k]['name'] = param;
+      chartData[k]['data'] = datas;
+      chartData[k]['min'] = min;
+      chartData[k]['max'] = max;
+      chartData[k]['avg'] = avg.toFixed(2);
+      k++;
     }
-  };
-  function ColorReplace (color) {
-	  /*if(color == "color:#b30000;stroke-color: #caccdc   ; stroke-width: 1;") {
+    console.log(chartData);
+      for (i in data.metrics) {
+      for (j in data.chartData[i]) {
+        data.chartData[i][j][2] = ColorReplace(data.chartData[i][j][1]);
+        //console.log(data.chartData[i][j][2]);
+      }
+      if (
+        typeof data.chartData != "undefined" &&
+        typeof data.chartData[i] != "undefined"
+      ) {
+        data.metrics[i].data = data.chartData[i];
+      }
+    }
+    console.log(data);
+  }
+  function ColorReplace(color) {
+    /*if(color == "color:#b30000;stroke-color: #caccdc   ; stroke-width: 1;") {
 		  return "color:#C00000;stroke-color: #caccdc   ; stroke-width: 1;";
 	  }else if(color == "color:#ff0000;stroke-color: #caccdc   ; stroke-width: 1;") {
 		  return "color:#FF0000;stroke-color: #caccdc   ; stroke-width: 1;";
@@ -179,33 +218,47 @@ var AirUIPanel = function($papa, templateClass, options, data) {
 	  }else if(color == "color:#aaa4a4;stroke-color: #caccdc   ; stroke-width: 1;") {
 		  return "color:#b30000;stroke-color: #caccdc   ; stroke-width: 1;";
 	  }*/
-	  if(color >=401) {
-		  return "color:#C00000;stroke-color: #caccdc   ; stroke-width: 1;";
-	  }else if(color >=301 && color <= 400) {
-		  return "color:#FF0000;stroke-color: #caccdc   ; stroke-width: 1;";
-	  }else if(color >=201 && color <= 300) {
-		  return "color:#FF9900;stroke-color: #caccdc   ; stroke-width: 1;";
-	  }else if(color >=101 && color <= 200) {
-		  return "color:#FFFF00;stroke-color: #caccdc   ; stroke-width: 1;";
-	  }else if(color >=51 && color <= 100) {
-		  return "color:#92D050;stroke-color: #caccdc   ; stroke-width: 1;";
-	  }else if(color >=0 && color <= 50) {
-		  return "color:#00B050;stroke-color: #caccdc   ; stroke-width: 1;";
-	  }else{
-		  return "color:#b30000;stroke-color: #caccdc   ; stroke-width: 1;";
-	  }
+    if (color >= 401) {
+      return "color:#C00000;stroke-color: #caccdc   ; stroke-width: 1;";
+    } else if (color >= 301 && color <= 400) {
+      return "color:#FF0000;stroke-color: #caccdc   ; stroke-width: 1;";
+    } else if (color >= 201 && color <= 300) {
+      return "color:#FF9900;stroke-color: #caccdc   ; stroke-width: 1;";
+    } else if (color >= 101 && color <= 200) {
+      return "color:#FFFF00;stroke-color: #caccdc   ; stroke-width: 1;";
+    } else if (color >= 51 && color <= 100) {
+      return "color:#92D050;stroke-color: #caccdc   ; stroke-width: 1;";
+    } else if (color >= 0 && color <= 50) {
+      return "color:#00B050;stroke-color: #caccdc   ; stroke-width: 1;";
+    } else {
+      return "color:#b30000;stroke-color: #caccdc   ; stroke-width: 1;";
+    }
+  }
+
+  function getDate(data) {
+    var d, m, y;
+    d = parseInt(data[0] + data[1]);
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    for(i in months)
+      if(data.substring(3, 6) == months[i])
+        m = i;
+    y = parseInt(data.substring(7, 11));
+    var hh = parseInt(data.substring(14, 16));
+    var ss = parseInt(data.substring(17, 19));
+    return new Date(
+      y, m, d, hh, ss
+    )
   }
 
   function drawMetricGraph(element, data, options) {
     var chart = new google.visualization.ColumnChart(element);
-
     var dt = new google.visualization.DataTable();
-    dt.addColumn('datetime', "Time");
-    dt.addColumn('number', 'ParameterIndex');
-    dt.addColumn({type: 'string', role:'tooltip'});
-    dt.addColumn({type: 'string', role:'style'});
+    dt.addColumn("datetime", "Time");
+    dt.addColumn("number", "ParameterIndex");
+    dt.addColumn({ type: "string", role: "tooltip" });
+    dt.addColumn({ type: "string", role: "style" });
 
-/*    var dt1 = new google.visualization.DataTable();
+    /*    var dt1 = new google.visualization.DataTable();
     dt1.addColumn('datetime', "Time");
     dt1.addColumn('number', 'ParameterIndex');
     dt1.addColumn({type: 'string', role:'tooltip'});
@@ -213,99 +266,123 @@ var AirUIPanel = function($papa, templateClass, options, data) {
 
     dt1.addRow([new Date(), 0, "0", "gray"]);
     chart.draw(dt1, options);*/
-    
-    for(i in data) {
+
+    for (let i = 0; i < 24; i++) {
+      const date = getDate(data.data[i][0]);
       //dt.addRow([new Date(data[i].date), parseInt(data[i].value), data[i].tooltip, data[i].color]);
-	  if(i != 0 || i != "0"){
-		dt.addRow([new Date(data[i][0]), parseInt(data[i][1]), ""+data[i][1], data[i][2]]);
-	  }
+        dt.addRow([
+          date,
+          data.data[i][1],
+          "" + data.data[i][1],
+          data.data[i][2]
+        ]);
     }
-    chart.draw(dt, options);          
+    chart.draw(dt, options);
   }
 
-  function insertMetricRow($papa, metric, options) {
-    $row = $(".metrics-row-template").clone().removeClass("metrics-row-template").css("display", "");
+  function insertMetricRow($papa, metric, options, allData) {
+    $row = $(".metrics-row-template")
+      .clone()
+      .removeClass("metrics-row-template")
+      .css("display", "");
     $row.find(".element-name").html(metric.name);
-    $row.find(".avg-value").html(Math.round(metric.avg));    
+    $row.find(".avg-value").html(Math.round(metric.avg));
     $row.find(".min-value").html(metric.min);
     $row.find(".max-value").html(metric.max);
-    if(metric.hideStats) {
+    if (metric.hideStats) {
       $row.find(".avg-value").attr("title", "Insufficient data");
       $row.find(".min-value").attr("title", "Insufficient data");
       $row.find(".max-value").attr("title", "Insufficient data");
-    }
-    else {
+    } else {
       $row.find(".avg-value").attr("title", metric.avgDesc);
       $row.find(".min-value").attr("title", metric.avgDesc);
-      $row.find(".max-value").attr("title", metric.avgDesc); 
+      $row.find(".max-value").attr("title", metric.avgDesc);
     }
     $row.appendTo($papa);
-    drawMetricGraph($row.find(".graph-container").get(0), metric.data, options);
-      
+    drawMetricGraph($row.find(".graph-container").get(0), metric, options, allData);
   }
 
-  function insertMetricRows($papa, metrics) {
-    for(var i = 0; i < metrics.length - 1; i++) {
-      insertMetricRow($papa, metrics[i], metricGraphOptions);
+  function insertMetricRows($papa, metrics, allData) {
+    for (var i = 0; i < metrics.length - 1; i++) {
+      insertMetricRow($papa, metrics[i], metricGraphOptions, allData);
     }
-    if ( i == metrics.length - 1) {
+    if (i == metrics.length - 1) {
       var options = {};
-      insertMetricRow($papa, metrics[i], _.extend(options, metricGraphOptions, lastMetricGraphOptions));
+      insertMetricRow(
+        $papa,
+        metrics[i],
+        _.extend(options, metricGraphOptions, lastMetricGraphOptions),
+        allData
+      );
     }
   }
 
   function drawGauge() {
     var g = new JustGage(gaugeOptions);
   }
-  
-function isInsufData() {
-  for(i in data.metrics) {
-    //if( (data.metrics[i].name == "PM10" || data.metrics[i].name == "PM2.5") && !data.metrics[i].hideStats ) return false;
-	if( (data.metrics[i].param == "PM10" || data.metrics[i].param == "PM2.5" || data.metrics[i].name == "PM10" || data.metrics[i].name == "PM2.5" ) && !data.metrics[i].hideStats ) return false;
+
+  function isInsufData() {
+    for (i in data.metrics) {
+      //if( (data.metrics[i].name == "PM10" || data.metrics[i].name == "PM2.5") && !data.metrics[i].hideStats ) return false;
+      if (
+        (data.metrics[i].param == "PM10" ||
+          data.metrics[i].param == "PM2.5" ||
+          data.metrics[i].name == "PM10" ||
+          data.metrics[i].name == "PM2.5") &&
+        !data.metrics[i].hideStats
+      )
+        return false;
+    }
+    return true;
   }
-  return true;
-}
 
   function draw() {
     $("#aqi-info").empty();
 
     $papa.append($panel);
     // if(data.down) {
-    if(data.down != "false" && typeof(data.down) != "undefined") {
-      $panel.find("#station-down-message").text("Insufficient data for computing AQI");
+    if (data.down != "false" && typeof data.down != "undefined") {
+      $panel
+        .find("#station-down-message")
+        .text("Insufficient data for computing AQI");
       $panel.find(".aqi-meter-panel").addClass("station-down");
-    }
-    else if(isInsufData()) {
+    } else if (isInsufData()) {
       $panel.find(".aqi-meter-panel").addClass("insuf-data");
     }
     drawGauge($panel.find(".aqi-meter").get(0), data);
-    setTimeout( function() {
-      insertMetricRows($panel.find(".metrics-container"), data.metrics);
+    setTimeout(function() {
+      insertMetricRows($panel.find(".metrics-container"), chartData, allData);
       set_baseLines();
     }, gaugeOptions.startAnimationTime);
   }
 
-  function set_baseLines(){
-	$('g[clip-path]').each(function(){if($(this).find('> g').length < 3){
-		width = $(this).siblings('rect').attr('width');
-		height = $(this).siblings('rect').attr('height') - 1;
+  function set_baseLines() {
+    $("g[clip-path]").each(function() {
+      if ($(this).find("> g").length < 3) {
+        width = $(this)
+          .siblings("rect")
+          .attr("width");
+        height =
+          $(this)
+            .siblings("rect")
+            .attr("height") - 1;
 
-		d3.select(this)
-		.append("g")
-		.append("rect")
-			.attr("x", 0)
-			.attr("y", height)
-			.attr("stroke", "none")
-			.attr("stroke-width", 0)
-			.attr("fill", "#333333")
-			.attr("width", width)
-			.attr("height", 1);
-
-	}});
+        d3.select(this)
+          .append("g")
+          .append("rect")
+          .attr("x", 0)
+          .attr("y", height)
+          .attr("stroke", "none")
+          .attr("stroke-width", 0)
+          .attr("fill", "#333333")
+          .attr("width", width)
+          .attr("height", 1);
+      }
+    });
   }
 
   function gcd(a, b) {
-    if ( ! b) {
+    if (!b) {
       return a;
     }
     return gcd(b, a % b);
@@ -313,15 +390,15 @@ function isInsufData() {
 
   function genGaugeColors(breakpoints) {
     var g = breakpoints[0].uplimit;
-    for( i in breakpoints ) {
+    for (i in breakpoints) {
       g = gcd(g, breakpoints[i].uplimit);
     }
     var colors = [];
     var last = 0;
-    for( i in breakpoints ) {
+    for (i in breakpoints) {
       var j = (breakpoints[i].uplimit - last) / g;
       last = breakpoints[i].uplimit;
-      while(j--) {
+      while (j--) {
         colors.push(breakpoints[i].color);
       }
     }
@@ -331,7 +408,7 @@ function isInsufData() {
   function genCustomSectors(breakpoints) {
     var sectors = [];
     var last = 0;
-    for(i in breakpoints) {
+    for (i in breakpoints) {
       var sector = {
         color: breakpoints[i].color,
         lo: last,
@@ -345,4 +422,4 @@ function isInsufData() {
 
   preProcessData();
   this.draw = draw;
-}
+};

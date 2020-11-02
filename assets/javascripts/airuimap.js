@@ -53,10 +53,8 @@ var AirUIMap = function (airObj) {
       })
       .then(async(response) => {
         let data = await response.json();
-        console.log(data);
         data_response = data;
         // mapInit(data.map.station_list[0]); // Initialize map using center coordinates
-        console.log(data.map.station_list[0]);
         initialize();
         // addDefaultData(data.def);
         // fetchDataForNode(data.def); // To be uncommented
@@ -79,7 +77,6 @@ var AirUIMap = function (airObj) {
   }
 
   async function initialize() {
-    console.log("INITIAL", loadedMap)
     if(loadedMap) return;
     loadedMap = true;
     // var mapOptions = {
@@ -87,9 +84,7 @@ var AirUIMap = function (airObj) {
     //   'zoom': parseInt(self.config.mapZoom),
     //   'streetViewControl': false
     // };
-    console.log(data_response)
     await drawMap(data_response.map.station_list[0]);
-    console.log(map)
     await pinStations(air.getAllStations());
     // google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
     // 	loaded = true;
@@ -136,14 +131,12 @@ var AirUIMap = function (airObj) {
     // console.log(map)
     let tempMk = new L.marker([station.latitude, station.longitude]).addTo(map);
     tempMk.on("click", function (e) {
-      console.log(station);
       stationClicked(station.id);
   })
     return tempMk;
   }
 
   function pinStations(stations) {
-    console.log(map)
     if(loaded) return;
     
     loaded = true;
@@ -154,7 +147,6 @@ var AirUIMap = function (airObj) {
     //   } else {
     //     _.each(stations, pinStation);	  
     //   }
-    console.log(stations, loaded)
     stations.forEach(station => {
       pinStation(station);
     });
