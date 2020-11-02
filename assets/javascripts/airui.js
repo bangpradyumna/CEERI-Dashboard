@@ -137,6 +137,8 @@ var AirUI = function(airObj) {
     // $("#no-response-panel").clone().appendTo("#aqi-info");
     // $("#no-data-panel").clone().appendTo("#aqi-info");
     $("#aqi-info-wrapper").addClass("loading");
+    $("#prevButton").css("display", "none");
+    $("#nextButton").css("display", "none");
     $("#aqi-info").removeClass("no-data");
     $("#aqi-info").removeClass("no-response");
   }

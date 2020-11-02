@@ -1,6 +1,9 @@
-#map-wrapper, #aqi-info
+#map-wrapper
  {
     height: 500px;
+}
+#aqi-info {
+    height: fit-content;
 }
 #map {
     width: 100%;

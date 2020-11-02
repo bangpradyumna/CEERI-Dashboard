@@ -6,6 +6,9 @@ var AirUIPanel = function($papa, templateClass, options, data, allData) {
   var chartData = [];
   console.log(data);
   var $panel;
+  var $prev = $("#prevButton");
+  var $next = $("#nextButton");
+  var flag = true;
   $panel = $("." + templateClass)
     .clone()
     .removeClass(templateClass)
@@ -32,6 +35,12 @@ var AirUIPanel = function($papa, templateClass, options, data, allData) {
 
   var metricGraphOptions = {
     height: 25,
+    page: "enable",
+    pageSize: 20,
+    pagingSymbols: {
+      prev: "prev",
+      next: "next"
+    },
     chartArea: {
       top: 0,
       width: "100%",
@@ -158,37 +167,36 @@ var AirUIPanel = function($papa, templateClass, options, data, allData) {
     }*/
     console.log(allData);
     var k = 0;
-    for(i in allData.siteInfo.parameters) {
+    for (i in allData.siteInfo.parameters) {
       const param = allData.siteInfo.parameters[i];
-      chartData[k] = {};
       var datas = [];
-      var min = 9999, max = 0, avg = 0;
-      for(let j = 0; j < 24; j++) {
+      var min = 9999,
+        max = 0,
+        avg = 0;
+      for (let j = 0; j < 24; j++) {
         datas[j] = [];
         datas[j][1] = parseFloat(allData.tabularData.bodyContent[j][param]);
-        datas[j][0] = allData.tabularData.bodyContent[j]['from date'];
-        datas[j][2] = ColorReplace( datas[j][1]);
-        if(allData.tabularData.bodyContent[j][param] == null) {
+        datas[j][0] = allData.tabularData.bodyContent[j]["from date"];
+        datas[j][2] = ColorReplace(datas[j][1]);
+        if (allData.tabularData.bodyContent[j][param] == null) {
           datas[j][1] = null;
           continue;
         }
-        if(datas[j][1] < min)
-          min = datas[j][1];
-        if(datas[j][1] > max)
-          max = datas[j][1];
+        if (datas[j][1] < min) min = datas[j][1];
+        if (datas[j][1] > max) max = datas[j][1];
         avg += datas[j][1] / 24;
       }
-      if(min == 9999)
-        continue;
-      chartData[k]['name'] = param;
-      chartData[k]['data'] = datas;
-      chartData[k]['min'] = min;
-      chartData[k]['max'] = max;
-      chartData[k]['avg'] = avg.toFixed(2);
+      if (min == 9999) continue;
+      chartData[k] = {};
+      chartData[k]["name"] = param;
+      chartData[k]["data"] = datas;
+      chartData[k]["min"] = min;
+      chartData[k]["max"] = max;
+      chartData[k]["avg"] = avg.toFixed(2);
       k++;
     }
     console.log(chartData);
-      for (i in data.metrics) {
+    for (i in data.metrics) {
       for (j in data.chartData[i]) {
         data.chartData[i][j][2] = ColorReplace(data.chartData[i][j][1]);
         //console.log(data.chartData[i][j][2]);
@@ -238,16 +246,25 @@ var AirUIPanel = function($papa, templateClass, options, data, allData) {
   function getDate(data) {
     var d, m, y;
     d = parseInt(data[0] + data[1]);
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    for(i in months)
-      if(data.substring(3, 6) == months[i])
-        m = i;
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ];
+    for (i in months) if (data.substring(3, 6) == months[i]) m = i;
     y = parseInt(data.substring(7, 11));
     var hh = parseInt(data.substring(14, 16));
     var ss = parseInt(data.substring(17, 19));
-    return new Date(
-      y, m, d, hh, ss
-    )
+    return new Date(y, m, d, hh, ss);
   }
 
   function drawMetricGraph(element, data, options) {
@@ -270,12 +287,7 @@ var AirUIPanel = function($papa, templateClass, options, data, allData) {
     for (let i = 0; i < 24; i++) {
       const date = getDate(data.data[i][0]);
       //dt.addRow([new Date(data[i].date), parseInt(data[i].value), data[i].tooltip, data[i].color]);
-        dt.addRow([
-          date,
-          data.data[i][1],
-          "" + data.data[i][1],
-          data.data[i][2]
-        ]);
+      dt.addRow([date, data.data[i][1], "" + data.data[i][1], data.data[i][2]]);
     }
     chart.draw(dt, options);
   }
@@ -299,21 +311,68 @@ var AirUIPanel = function($papa, templateClass, options, data, allData) {
       $row.find(".max-value").attr("title", metric.avgDesc);
     }
     $row.appendTo($papa);
-    drawMetricGraph($row.find(".graph-container").get(0), metric, options, allData);
+    drawMetricGraph(
+      $row.find(".graph-container").get(0),
+      metric,
+      options,
+      allData
+    );
   }
 
   function insertMetricRows($papa, metrics, allData) {
-    for (var i = 0; i < metrics.length - 1; i++) {
-      insertMetricRow($papa, metrics[i], metricGraphOptions, allData);
-    }
-    if (i == metrics.length - 1) {
-      var options = {};
-      insertMetricRow(
-        $papa,
-        metrics[i],
-        _.extend(options, metricGraphOptions, lastMetricGraphOptions),
-        allData
-      );
+    if (chartData.length < 9) {
+      for (var i = 0; i < metrics.length - 1; i++) {
+        insertMetricRow($papa, metrics[i], metricGraphOptions, allData);
+      }
+      if (i == metrics.length - 1) {
+        var options = {};
+        insertMetricRow(
+          $papa,
+          metrics[i],
+          _.extend(options, metricGraphOptions, lastMetricGraphOptions),
+          allData
+        );
+      }
+      $prev.css("display", "none");
+      $next.css("display", "none");
+    } else {
+      $prev.css("display", "");
+      $next.css("display", "");
+      if (flag) {
+        $next.attr("disabled", false);
+        $prev.attr("disabled", true);
+        for (var i = 0; i < parseInt(chartData.length / 2); i++) {
+          insertMetricRow($papa, metrics[i], metricGraphOptions, allData);
+        }
+        if (true) {
+          var options = {};
+          insertMetricRow(
+            $papa,
+            metrics[parseInt(chartData.length / 2)],
+            _.extend(options, metricGraphOptions, lastMetricGraphOptions),
+            allData
+          );
+        }
+      } else {
+        $prev.attr("disabled", false);
+        $next.attr("disabled", true);
+        for (
+          var i = parseInt(chartData.length / 2) + 1;
+          i < chartData.length - 1;
+          i++
+        ) {
+          insertMetricRow($papa, metrics[i], metricGraphOptions, allData);
+        }
+        if (true) {
+          var options = {};
+          insertMetricRow(
+            $papa,
+            metrics[chartData.length - 1],
+            _.extend(options, metricGraphOptions, lastMetricGraphOptions),
+            allData
+          );
+        }
+      }
     }
   }
 
@@ -339,7 +398,14 @@ var AirUIPanel = function($papa, templateClass, options, data, allData) {
   function draw() {
     $("#aqi-info").empty();
 
-    $papa.append($panel);
+    $panel = $("." + templateClass)
+      .clone()
+      .removeClass(templateClass)
+      .css("display", "");
+    $panel.find(".title").text(data.title);
+    $panel.find(".prominent-param").text(data.aqi.param);
+    $panel.find(".date-on").text(data.date);
+
     // if(data.down) {
     if (data.down != "false" && typeof data.down != "undefined") {
       $panel
@@ -354,6 +420,7 @@ var AirUIPanel = function($papa, templateClass, options, data, allData) {
       insertMetricRows($panel.find(".metrics-container"), chartData, allData);
       set_baseLines();
     }, gaugeOptions.startAnimationTime);
+    $papa.append($panel);
   }
 
   function set_baseLines() {
@@ -419,6 +486,14 @@ var AirUIPanel = function($papa, templateClass, options, data, allData) {
     }
     return sectors;
   }
+
+  function toggle() {
+    flag = !flag;
+    draw();
+  }
+
+  $prev.on("click", toggle);
+  $next.on("click", toggle);
 
   preProcessData();
   this.draw = draw;
