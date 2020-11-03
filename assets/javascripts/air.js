@@ -358,7 +358,7 @@ var Air = function () {
 
     var accessToken = {"time":currentTimeObj.getTime(), "timeZoneOffset":currentTimeObj.getTimezoneOffset()};
       return $.ajax({
-        url : "https://app.cpcbccr.com/caaqms/fetch_table_data",
+        url : "https://ceeri-dashboard.bits-dvm.org/back/https://app.cpcbccr.com/caaqms/fetch_table_data",
         // url : "http://172.30.14.63:8084/aqi_all_Parameters",
         type : 'POST',
         dataType : "json",

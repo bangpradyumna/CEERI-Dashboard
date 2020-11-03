@@ -184,7 +184,7 @@ var AirUIPanel = function($papa, templateClass, options, data, allData) {
         }
         if (datas[j][1] < min) min = datas[j][1];
         if (datas[j][1] > max) max = datas[j][1];
-        avg += datas[j][1] / 24;
+        avg += datas[j][1];
       }
       if (min == 9999) continue;
       chartData[k] = {};
@@ -192,6 +192,9 @@ var AirUIPanel = function($papa, templateClass, options, data, allData) {
       chartData[k]["data"] = datas;
       chartData[k]["min"] = min;
       chartData[k]["max"] = max;
+      console.log(avg);
+      avg = avg / 24;
+      console.log(avg);
       chartData[k]["avg"] = avg.toFixed(2);
       k++;
     }
@@ -298,7 +301,7 @@ var AirUIPanel = function($papa, templateClass, options, data, allData) {
       .removeClass("metrics-row-template")
       .css("display", "");
     $row.find(".element-name").html(metric.name);
-    $row.find(".avg-value").html(Math.round(metric.avg));
+    $row.find(".avg-value").html(metric.avg);
     $row.find(".min-value").html(metric.min);
     $row.find(".max-value").html(metric.max);
     if (metric.hideStats) {
