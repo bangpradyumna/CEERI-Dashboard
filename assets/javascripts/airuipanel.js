@@ -18,7 +18,7 @@ var AirUIPanel = function($papa, templateClass, options, data, allData) {
   $panel.find(".date-on").text(data.date);
 
   var gaugeOptions = {
-    parentNode: $panel.find(".aqi-meter").get(0),
+   id: 'aqi-meter',
     value: data.aqi.value,
     min: 0,
     max: 500,
@@ -396,15 +396,18 @@ var AirUIPanel = function($papa, templateClass, options, data, allData) {
   }
 
   function draw() {
-    $("#aqi-info").empty();
 
     $panel = $("." + templateClass)
       .clone()
       .removeClass(templateClass)
       .css("display", "");
+      
     $panel.find(".title").text(data.title);
     $panel.find(".prominent-param").text(data.aqi.param);
     $panel.find(".date-on").text(data.date);
+
+    $("#aqi-info").empty();
+    $papa.append($panel);
 
     // if(data.down) {
     if (data.down != "false" && typeof data.down != "undefined") {
@@ -415,12 +418,11 @@ var AirUIPanel = function($papa, templateClass, options, data, allData) {
     } else if (isInsufData()) {
       $panel.find(".aqi-meter-panel").addClass("insuf-data");
     }
-    drawGauge($panel.find(".aqi-meter").get(0), data);
+    drawGauge();
     setTimeout(function() {
       insertMetricRows($panel.find(".metrics-container"), chartData, allData);
       set_baseLines();
     }, gaugeOptions.startAnimationTime);
-    $papa.append($panel);
   }
 
   function set_baseLines() {
