@@ -13,3 +13,7 @@
     display: flex;
     justify-content: center;
 }
+.leaflet-marker-icon {
+    width: 24px;
+    height: 32px 
+} 
