@@ -1,4 +1,4 @@
-var AirUIPanel = function($papa, templateClass, options, data, allData) {
+var AirUIPanel = function ($papa, templateClass, options, data, allData) {
   if (!data || !data.metrics || !data.metrics.length) {
     $papa.addClass("no-data");
   }
@@ -18,7 +18,7 @@ var AirUIPanel = function($papa, templateClass, options, data, allData) {
   $panel.find(".date-on").text(data.date);
 
   var gaugeOptions = {
-   id: 'aqi-meter',
+    id: 'aqi-meter',
     value: data.aqi.value,
     min: 0,
     max: 500,
@@ -28,10 +28,37 @@ var AirUIPanel = function($papa, templateClass, options, data, allData) {
     titleFontColor: "black", //data.aqi.color,
     label: "AQI",
     showMinMax: true,
-    levelColorsGradient: false
+    noGradient: false,
+    customSectors: [{
+      color: "#00B050",
+      lo: 0,
+      hi: 50
+    }, {
+      color: "#92D050",
+      lo: 51,
+      hi: 100
+    }, {
+      color: "#FFFF00",
+      lo: 101,
+      hi: 200
+    }, {
+      color: "#FF9900",
+      lo: 201,
+      hi: 300
+    }, {
+      color: "#FF0000",
+      lo: 301,
+      hi: 400
+    }, {
+      color: "#FF9900",
+      lo: 401,
+      hi: 1000
+    }],
     //levelColors: genGaugeColors(options.breakpoints)
     // customSectors: genCustomSectors(options.breakpoints)
   };
+
+
 
   var metricGraphOptions = {
     height: 25,
@@ -404,7 +431,7 @@ var AirUIPanel = function($papa, templateClass, options, data, allData) {
       .clone()
       .removeClass(templateClass)
       .css("display", "");
-      
+
     $panel.find(".title").text(data.title);
     $panel.find(".prominent-param").text(data.aqi.param);
     $panel.find(".date-on").text(data.date);
@@ -422,14 +449,14 @@ var AirUIPanel = function($papa, templateClass, options, data, allData) {
       $panel.find(".aqi-meter-panel").addClass("insuf-data");
     }
     drawGauge();
-    setTimeout(function() {
+    setTimeout(function () {
       insertMetricRows($panel.find(".metrics-container"), chartData, allData);
       set_baseLines();
     }, gaugeOptions.startAnimationTime);
   }
 
   function set_baseLines() {
-    $("g[clip-path]").each(function() {
+    $("g[clip-path]").each(function () {
       if ($(this).find("> g").length < 3) {
         width = $(this)
           .siblings("rect")
