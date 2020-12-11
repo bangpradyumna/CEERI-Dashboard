@@ -250,9 +250,6 @@ var AirUI = function (airObj) {
 
   function downloadData() {
     
-    $(".alert-success").css("display", "hidden");
-    $(".alert-danger").css("display", "hidden");
-
     const username = $('#name').val();
     const pass = $('#pass').val();
 
@@ -492,6 +489,7 @@ var AirUI = function (airObj) {
     $('#time').change(timeChanged);
     $('#downloadExcel').on("click", downloadExcel);
     $('#downloadData').on("click", downloadData);
+
   }
 
   function resetDropdowns() {
