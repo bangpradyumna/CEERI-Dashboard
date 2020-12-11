@@ -17,6 +17,7 @@
   <!-- Google Maps CSS -->
   <link href="assets/stylesheets/map.css" rel="stylesheet">
   <link href="assets/stylesheets/bootstrap-timepicker.min.css" rel="stylesheet">
+  <link href="assets/stylesheets/login.css" rel="stylesheet">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -75,16 +76,14 @@
         <div class="col-md-4 form-group">
           <div class="input-group">
             <div class="input-group-addon">City</div>
-            <select id="cities" class="form-control selectpicker" data-width="30%" data-live-search="true"
-              title="Select City...">
+            <select id="cities" class="form-control selectpicker" data-width="30%" data-live-search="true" title="Select City...">
             </select>
           </div>
         </div>
         <div class="col-md-4 form-group">
           <div class="input-group">
             <div class="input-group-addon">Station</div>
-            <select id="stations" class="form-control selectpicker" data-width="30%" data-live-search="true"
-              title="Select Station...">
+            <select id="stations" class="form-control selectpicker" data-width="30%" data-live-search="true" title="Select Station...">
             </select>
           </div>
         </div>
@@ -123,7 +122,8 @@
           </div>
         </div>
         <div class="col-md-2 form-group">
-          <button type="button" id="downloadData" class="btn btn-primary btn-md btn-block">Download Excel</button>
+          <button type="button" class="btn btn-primary btn-md btn-block"><a href="#myModal" class="trigger-btn"
+              data-toggle="modal">Download Excel</a></button>
         </div>
       </div>
       <div class="row col-md-12-x">
@@ -140,8 +140,8 @@
           <div id="aqi-info">
           </div>
           <div class="pagination">
-              <button id='prevButton' class="btn btn-primary" style="display: none">Prev</button>&nbsp; 
-              <button id='nextButton' class="btn btn-primary" style="display: none">Next</button> 
+            <button id='prevButton' class="btn btn-primary" style="display: none">Prev</button>&nbsp;
+            <button id='nextButton' class="btn btn-primary" style="display: none">Next</button>
           </div>
         </div>
       </div>
@@ -201,7 +201,7 @@
               </div>
             </div>
           </div> -->
-          <!-- <div id="city2" class="col-md-3 name">          
+      <!-- <div id="city2" class="col-md-3 name">          
               <div class="panel panel-default">
                 <div class="panel-body">        
                   <div class="form-group">
@@ -266,11 +266,11 @@
                     </div>
                   </div>
                 </div> -->
-          <div class="row city-info">
-          </div>
-        </div>
+      <div class="row city-info">
       </div>
     </div>
+  </div>
+  </div>
   </div> <!-- /City comparison container -->
   <hr />
   <!--div id="data-availability" class="row col-md-12-x">
@@ -335,9 +335,9 @@
         <p class="navbar-text">IIT Kanpur</p>
       </div>
       <div class="col-md-5">
-        <p class="navbar-text navbar-right">Developed by <a target="_blank"
-            href="http://in.linkedin.com/pub/sagar-parihar/68/b05/546" class="navbar-link">Sagar Parihar</a> & <a
-            target="_blank" href="http://in.linkedin.com/in/swapnilsm" class="navbar-link">Swapnil Mahajan</a></p>
+        <p class="navbar-text navbar-right">Developed by <a target="_blank" href="http://in.linkedin.com/pub/sagar-parihar/68/b05/546"
+            class="navbar-link">Sagar Parihar</a> & <a target="_blank" href="http://in.linkedin.com/in/swapnilsm" class="navbar-link">Swapnil
+            Mahajan</a></p>
       </div>
     </div>
   </div>
@@ -426,8 +426,7 @@
           <th class="col-md-2 text-center">Remark</th>
           <th class="col-md-1">Color Code</th>
           <th class="col-md-7">Possible Health Impacts</th>
-          <th class="col-md-1"><a
-              style="position: absolute;right: 21px;top: 6px;border: 0px;border-radius: 2px;color: #3498db;cursor:pointer;"
+          <th class="col-md-1"><a style="position: absolute;right: 21px;top: 6px;border: 0px;border-radius: 2px;color: #3498db;cursor:pointer;"
               id="downloadExcel"><i class="glyphicon glyphicon-download-alt" style="top: 2px;font-size: 13px"></i> List
               of AQI Stations with Data of above selected Date &amp; Time</a>
           </th>
@@ -452,19 +451,19 @@
           <td class="col-md-1 color-code" style="background-color: rgb(255, 255, 0);"></td>
           <td class="col-md-8 desc">Breathing discomfort to the people with lungs, asthma and heart diseases</td>
         </tr>
-        <tr >
+        <tr>
           <td class="col-md-1 aqi-value text-center text-middle">201-300</td>
           <td class="col-md-2 remark text-center text-middle">Poor</td>
           <td class="col-md-1 color-code" style="background-color: rgb(255, 153, 0);"></td>
           <td class="col-md-8 desc">Breathing discomfort to most people on prolonged exposure</td>
         </tr>
-        <tr >
+        <tr>
           <td class="col-md-1 aqi-value text-center text-middle">301-400</td>
           <td class="col-md-2 remark text-center text-middle">Very Poor</td>
           <td class="col-md-1 color-code" style="background-color: rgb(255, 0, 0);"></td>
           <td class="col-md-8 desc">Respiratory illness on prolonged exposure</td>
         </tr>
-        <tr >
+        <tr>
           <td class="col-md-1 aqi-value text-center text-middle">401-500</td>
           <td class="col-md-2 remark text-center text-middle">Severe</td>
           <td class="col-md-1 color-code" style="background-color: rgb(192, 0, 0);"></td>
@@ -502,6 +501,43 @@
         </thead>
         <tbody class="metrics-container"></tbody>
       </table>
+    </div>
+  </div>
+  <div class="login-overlay">
+    <div id="myModal" class="modal fade in_bg">
+      <div class="modal-dialog modal-login">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="avatar">
+              <img src="./assets/images/avatar.png" alt="Avatar">
+            </div>
+            <h4 class="modal-title">Member Login</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div>
+              <div class="form-group">
+                <input type="text" class="form-control" id="name" name="username" placeholder="Username" required="required">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control" id="pass" name="password" placeholder="Password" required="required">
+              </div>
+              <div class="form-group">
+                <button id="downloadData" class="btn btn-primary btn-lg btn-block">Login</button>
+              </div>
+            </div>
+            <div class="alert alert-success" role="alert">
+              Credentials validated !!! Downlaod Started!!!
+            </div>
+            <div class="alert alert-danger" role="alert">
+              Wrong Credentials !!!
+            </div>
+          </div>
+          <!-- <div class="modal-footer">
+            <a href="#">Forgot Password?</a>
+          </div> -->
+        </div>
+      </div>
     </div>
   </div>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -543,11 +579,11 @@
   <!-- Google Charts Scripts -->
   <!--script type="text/javascript" src="//www.google.com/jsapi"></script-->
   <script type="text/javascript" src='https://www.google.com/jsapi?autoload={%22modules%22:[{%22name%22:%22visualization%22,%22version%22:%221%22,%22packages%22:[%22corechart%22]}]}'>
-    </script>    
-    <!--script type="text/javascript">
+  </script>
+  <!--script type="text/javascript">
       //google.load('visualization', '1', {packages: ["corechart"]});
-    </script-->    
-   <!-- <script>
+    </script-->
+  <!-- <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -556,8 +592,8 @@
     ga('create', 'UA-61639215-1', 'auto');
     ga('send', 'pageview');
     </script>-->
-<!-- New script added by Nishant - 19th aug 2015 -->
-	<!-- <script>
+  <!-- New script added by Nishant - 19th aug 2015 -->
+  <!-- <script>
   	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -567,7 +603,6 @@
   	ga('send', 'pageview');
 
 	</script> -->
-  </body>
+</body>
 
-<!-- Mirrored from app.cpcbccr.com/AQI_India/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Feb 2020 06:16:03 GMT -->
 </html>

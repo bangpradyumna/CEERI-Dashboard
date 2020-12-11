@@ -1,6 +1,6 @@
-#map-wrapper
- {
+#map-wrapper {
     height: 500px;
+    z-index: 30;
 }
 #aqi-info {
     height: fit-content;
