@@ -29,6 +29,7 @@ var AirUIPanel = function ($papa, templateClass, options, data, allData) {
     label: "AQI",
     showMinMax: true,
     noGradient: false,
+    levelColorsGradient: false,
     customSectors: [{
       color: "#00B050",
       lo: 0,
@@ -269,6 +270,7 @@ var AirUIPanel = function ($papa, templateClass, options, data, allData) {
     } else if (color >= 0 && color <= 50) {
       return "color:#00B050;stroke-color: #caccdc   ; stroke-width: 1;";
     } else {
+      console.log(color, typeof color);
       return "color:#b30000;stroke-color: #caccdc   ; stroke-width: 1;";
     }
   }
@@ -350,6 +352,7 @@ var AirUIPanel = function ($papa, templateClass, options, data, allData) {
   }
 
   function insertMetricRows($papa, metrics, allData) {
+    console.log("HEY")
     if (chartData.length < 9) {
       for (var i = 0; i < metrics.length - 1; i++) {
         insertMetricRow($papa, metrics[i], metricGraphOptions, allData);
@@ -407,6 +410,7 @@ var AirUIPanel = function ($papa, templateClass, options, data, allData) {
   }
 
   function drawGauge() {
+    console.log("HEY")
     var g = new JustGage(gaugeOptions);
   }
 
@@ -426,6 +430,7 @@ var AirUIPanel = function ($papa, templateClass, options, data, allData) {
   }
 
   function draw() {
+    console.log("DRAW")
 
     $panel = $("." + templateClass)
       .clone()
@@ -440,12 +445,7 @@ var AirUIPanel = function ($papa, templateClass, options, data, allData) {
     $papa.append($panel);
 
     // if(data.down) {
-    if (data.down != "false" && typeof data.down != "undefined") {
-      $panel
-        .find("#station-down-message")
-        .text("Insufficient data for computing AQI");
-      $panel.find(".aqi-meter-panel").addClass("station-down");
-    } else if (isInsufData()) {
+    if (isInsufData()) {
       $panel.find(".aqi-meter-panel").addClass("insuf-data");
     }
     drawGauge();

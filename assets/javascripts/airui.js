@@ -572,15 +572,18 @@ var AirUI = function (airObj) {
   }
 
   function drawPanel(data) {
+    console.log(data);
     if (onLoad) {
-      if (data.data[0].aqi != null && data.data[0].down != "true") {
+      if (data.data[0].aqi != null) {
         onLoad = false;
         var panel = new AirUIPanel($("#aqi-info"), "panel-template", self.config, data.data[0], data.allData[0].data);
+        console.log(data);
         panel.draw();
         // $('#downloadExcel').click(downloadExcel)
       }
     } else {
       if (data.data[0].aqi != null) {
+        console.log(data);
         onLoad = false;
         var panel = new AirUIPanel($("#aqi-info"), "panel-template", self.config, data.data[0], data.allData[0].data);
         panel.draw();
